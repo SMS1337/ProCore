@@ -2,8 +2,8 @@
 local player = game.Players.LocalPlayer
 	local mouse = player:GetMouse()
 typer = script.Parent.input
-maxnumber=200
-stockphrase = " Tap here or press '/' to begin typing."
+maxnumber=150
+stockphrase = 'Press "/" to type.'
 UID = game:GetService("UserInputService")
 
 --Remove CoreGUI. 
@@ -14,6 +14,11 @@ StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 function animate()
 	typer.Text = ""
 	typer:CaptureFocus()
+	for i = 0.5,0,-.1 do
+		game:GetService("RunService").RenderStepped:wait()
+		typer.TextTransparency=i
+		script.Parent.char.TextTransparency=i
+	end
 end
 
 --Catches the "/" keydown
@@ -31,6 +36,11 @@ UID.InputBegan:connect(function(input)
 			if workspace:findFirstChild'ProChat' then
 				workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
 				typer.Text = stockphrase
+				for i = 0,0.5,.1 do
+					game:GetService("RunService").RenderStepped:wait()
+					typer.TextTransparency=i
+					script.Parent.char.TextTransparency=i
+				end
 			end		
 		end
 	end
