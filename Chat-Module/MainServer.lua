@@ -26,7 +26,7 @@ function rgb(r,g,b)
 	return Color3.new(r/165,g/165,b/165)
 end
 
-SizeX=16
+sizeX=16
 
 ----------------------------------------------------------------------------------------------------------- ACTUAL SCRIPT
 
@@ -52,7 +52,7 @@ function deliver(instanc)
 		if a.PlayerGui:findFirstChild'chatGui' then
 			for _,b in pairs(a.PlayerGui.chatGui.Frame:GetChildren()) do
 				if b:IsA'Frame' and b.Name=='message' then
-					b:TweenPosition(UDim2.new(0,0,1,b.Position.Y.Offset - sizeX-(sizeX*2)-1),"Out","Linear",.1,true)
+					b:TweenPosition(UDim2.new(0,0,1,b.Position.Y.Offset-sizeX),"Out","Linear",.1,true)
 					if b.Position.Y.Offset < triggerdel then -- Most likely going to scale this in the future. 
 						b:Destroy()
 					end
@@ -60,8 +60,8 @@ function deliver(instanc)
 			end
 			local newMsg=instanc:Clone()
 			newMsg.Parent=a.PlayerGui.chatGui.Frame
-				newMsg.Position=UDim2.new(-1,0,1,sizeX-(sizeX*2))--To make sure it animates correctly
-				newMsg:TweenPosition(UDim2.new(0,0,1,sizeX-(sizeX*2)),"Out","Linear",.1,true)
+				newMsg.Position=UDim2.new(-1,0,1,sizeX-sizeX*2)--To make sure it animates correctly
+				newMsg:TweenPosition(UDim2.new(0,0,1,sizeX-sizeX*2),"Out","Linear",.1,true)
 		end
 	end
 end
