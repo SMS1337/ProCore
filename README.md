@@ -1,6 +1,6 @@
-# ProChat Client
-Pro Chat is a lightweight custom chat client for ROBLOX. 
+# ProCore Client
+ProCore (short for Professional Core) is a complete replacement to the shitty Core Graphical User Interface on ROBLOX's client + Studio.
 
 # Development
-You can see how development is proceeding using our Trello. 
-https://trello.com/b/99NhG1za/pro-chat
+This is a open-source project! Help us develop!
+I will be taking any non-malicious pull requests.
