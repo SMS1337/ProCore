@@ -11,9 +11,12 @@
 
 function promptModeration(player)
 	-- Connect compatible moderation systems here for gold text
+	
+	--[[ EXAMPLE:
 	if player.Name=="eprent" or player.Name=="Player" then
 		return true
 	end
+	]]--
 end
 
 
