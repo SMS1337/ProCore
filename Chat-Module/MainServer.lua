@@ -5,23 +5,28 @@
 	Warning! If you have firewall "ro-ware" in your game, it may break the chat. Or vice-versa. 	
 --]]
 
--- This is an API (correct term?) to prompt moderation.
+-- This is an API (correct term?) to prompt moderation. Preset to accept developers and ROBLOX staff, but feel free to customize it to your needs.
 function promptModeration(player)
+	local extraadmins={"eprent";"merely";"seranok";"player"} -- People who get privledges but aren't in group.
 
-	-- Connect compatible moderation systems here for gold text
-	
-	--[[ EXAMPLE:
-	if player.Name=="eprent" or player.Name=="Player" then
-		return true
+	-- This will scan the table above to see if there is a spot for the player.
+	local function retr(player)
+		for _,p in pairs(extraadmins) do
+			if string.lower(player.Name)==p then
+				return true
+			end
+		end
 	end
-	]]--
 
+	if player:IsInGroup(1200769) or retr(player) then -- The IsInGroup is for the admin list online, gg.
+		return true -- Back to tower!
+	end
 end
 
 
 --To fix my ugly color3 statements
 function rgb(r,g,b)
-	return Color3.new(r/165,g/165,b/165)
+	return Color3.new(r/255,g/255,b/255)
 end
 
 sizeX=20
@@ -94,7 +99,7 @@ function generateMessage(msg,player)
 		nameLabel.Text=" "..player.Name..": " wait() --For some reason it was failing without a delay.
 	end
 		--Finish the generation for names
-		nameLabel.Size=UDim2.new(0,string.len(nameLabel.Text)*7,1,0)
+		nameLabel.Size=UDim2.new(0,string.len(nameLabel.Text)*7,1,0) 
 		nameLabel.TextColor3=BrickColor.White().Color
 		nameLabel.TextStrokeTransparency=.8
 		nameLabel.Parent=newFrame
@@ -107,7 +112,7 @@ function generateMessage(msg,player)
 		--The textlabel to hold the message
 	local textLabel=Instance.new'TextLabel'
 		textLabel.Text=msg -- Don't judge.
-		textLabel.Size=UDim2.new(0,string.len(textLabel.Text)*8.9,1,0) --Calculate the size. Because TextBounds sucks..
+		textLabel.Size=UDim2.new(0,string.len(textLabel.Text)*8.9,1,0) 
 		textLabel.TextColor3=BrickColor.White().Color 
 		textLabel.TextStrokeTransparency=0.8 --Text shadow
 		textLabel.BackgroundTransparency=1
