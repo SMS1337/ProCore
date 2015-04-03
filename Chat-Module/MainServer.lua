@@ -3,8 +3,6 @@
 	It basically creates a trigger in Workspace and then renders it and loops it through each player.
 	
 	Warning! If you have firewall "ro-ware" in your game, it may break the chat. Or vice-versa. 	
-	
-	Need to do: Clean this fucking mess up. Ugly coding, I know lol.
 --]]
 
 -- This is an API (correct term?) to prompt moderation shit.
