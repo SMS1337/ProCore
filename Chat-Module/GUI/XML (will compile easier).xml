@@ -1,0 +1,257 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<External>null</External>
+	<External>nil</External>
+	<Item class="ScreenGui" referent="RBX5B22925AC8594216A592FB12DF51D0D6">
+		<Properties>
+			<string name="Name">chatGui</string>
+		</Properties>
+		<Item class="Frame" referent="RBX4428195192354DE79DBBF1341B944A22">
+			<Properties>
+				<bool name="Active">false</bool>
+				<Color3 name="BackgroundColor3">4294967295</Color3>
+				<float name="BackgroundTransparency">1</float>
+				<Color3 name="BorderColor3">4279970357</Color3>
+				<int name="BorderSizePixel">1</int>
+				<bool name="ClipsDescendants">false</bool>
+				<bool name="Draggable">false</bool>
+				<string name="Name">Frame</string>
+				<UDim2 name="Position">
+					<XS>0</XS>
+					<XO>5</XO>
+					<YS>0</YS>
+					<YO>5</YO>
+				</UDim2>
+				<float name="Rotation">0</float>
+				<UDim2 name="Size">
+					<XS>0</XS>
+					<XO>500</XO>
+					<YS>0</YS>
+					<YO>130</YO>
+				</UDim2>
+				<token name="SizeConstraint">0</token>
+				<token name="Style">0</token>
+				<bool name="Visible">true</bool>
+				<int name="ZIndex">1</int>
+			</Properties>
+			<Item class="TextBox" referent="RBXFA5180386BEE4D2D9713A2EB4A2EED11">
+				<Properties>
+					<bool name="Active">true</bool>
+					<Color3 name="BackgroundColor3">4281616734</Color3>
+					<float name="BackgroundTransparency">0</float>
+					<Color3 name="BorderColor3">4281616734</Color3>
+					<int name="BorderSizePixel">3</int>
+					<bool name="ClearTextOnFocus">true</bool>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<token name="Font">2</token>
+					<token name="FontSize">5</token>
+					<bool name="MultiLine">false</bool>
+					<string name="Name">input</string>
+					<UDim2 name="Position">
+						<XS>0</XS>
+						<XO>0</XO>
+						<YS>1</YS>
+						<YO>10</YO>
+					</UDim2>
+					<float name="Rotation">0</float>
+					<UDim2 name="Size">
+						<XS>0.600000024</XS>
+						<XO>0</XO>
+						<YS>0</YS>
+						<YO>15</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<string name="Text"> Tap here or press &apos;/&apos; to begin typing.</string>
+					<Color3 name="TextColor3">4294967295</Color3>
+					<bool name="TextScaled">true</bool>
+					<Color3 name="TextStrokeColor3">4278190080</Color3>
+					<float name="TextStrokeTransparency">0.5</float>
+					<float name="TextTransparency">0</float>
+					<bool name="TextWrapped">true</bool>
+					<token name="TextXAlignment">0</token>
+					<token name="TextYAlignment">1</token>
+					<bool name="Visible">true</bool>
+					<int name="ZIndex">1</int>
+				</Properties>
+			</Item>
+			<Item class="TextLabel" referent="RBXFA617B05F11A436C9A3B52A20012B978">
+				<Properties>
+					<bool name="Active">false</bool>
+					<Color3 name="BackgroundColor3">4281616734</Color3>
+					<float name="BackgroundTransparency">0</float>
+					<Color3 name="BorderColor3">4281616734</Color3>
+					<int name="BorderSizePixel">3</int>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<token name="Font">4</token>
+					<token name="FontSize">5</token>
+					<string name="Name">char</string>
+					<UDim2 name="Position">
+						<XS>0.600000024</XS>
+						<XO>-2</XO>
+						<YS>1</YS>
+						<YO>10</YO>
+					</UDim2>
+					<float name="Rotation">0</float>
+					<UDim2 name="Size">
+						<XS>0.200000003</XS>
+						<XO>0</XO>
+						<YS>0</YS>
+						<YO>15</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<string name="Text"></string>
+					<Color3 name="TextColor3">4292088598</Color3>
+					<bool name="TextScaled">true</bool>
+					<Color3 name="TextStrokeColor3">4278190080</Color3>
+					<float name="TextStrokeTransparency">0.800000012</float>
+					<float name="TextTransparency">0</float>
+					<bool name="TextWrapped">true</bool>
+					<token name="TextXAlignment">2</token>
+					<token name="TextYAlignment">1</token>
+					<bool name="Visible">true</bool>
+					<int name="ZIndex">2</int>
+				</Properties>
+			</Item>
+			<Item class="LocalScript" referent="RBXF67F67C7FAAF48C0B729D79A4B28DF86">
+				<Properties>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">handle</string>
+					<ProtectedString name="Source"><![CDATA[-- I WARN YOU. THIS SCRIPT IS GROSS.
+local player = game.Players.LocalPlayer
+	local mouse = player:GetMouse()
+typer = script.Parent.input
+maxnumber=200
+stockphrase = " Tap here or press '/' to begin typing."
+UID = game:GetService("UserInputService")
+
+--Remove CoreGUI. 
+local StarterGui = game:GetService('StarterGui')
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+	
+--Captures focus	
+function animate()
+	typer.Text = ""
+	typer:CaptureFocus()
+end
+
+--Catches the "/" keydown
+mouse.KeyUp:connect(function(key)
+	if key=="/" then
+		animate()
+	end
+end)
+
+--workspace["Chat Servers"].ChatStrapper:FireServer(msg)
+UID.InputBegan:connect(function(input)
+	if input.KeyCode == Enum.KeyCode.Return then
+		if typer.Text ~= stockphrase and typer.Text ~= "" and typer.Text ~=" " then
+			--Good good, let's continue.
+			if workspace:findFirstChild'ProChat' then
+				workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
+				typer.Text = stockphrase
+			end		
+		end
+	end
+end)
+
+--This is to track the character count of the textbox, ugly because I can't find a proper event.
+while wait() do
+	
+	local number = string.len(script.Parent.input.Text)
+	
+	--Fill the label
+	if typer.Text ~= stockphrase and typer.Text ~= "" then
+		script.Parent.char.Text = maxnumber-number.." characters left"
+	else
+		number=0
+		script.Parent.char.Text = maxnumber-number.." characters left"
+	end
+	
+	--Set the color
+	if number>(maxnumber-(maxnumber/3)) then
+		script.Parent.char.TextColor3=Color3.new(212/255, 19/255, 22/255)
+		else
+		script.Parent.char.TextColor3=Color3.new(10/255, 151/255, 212/255)
+	end
+	
+	--Set it back to the correct length.
+	if number>maxnumber then
+		typer.Text = string.sub(typer.Text,0,maxnumber)
+	end 
+	
+end]]></ProtectedString>
+				</Properties>
+			</Item>
+			<Item class="Frame" referent="RBXDC3AA7E3DBA2484B826D42E8C829D765">
+				<Properties>
+					<bool name="Active">false</bool>
+					<Color3 name="BackgroundColor3">4281089616</Color3>
+					<float name="BackgroundTransparency">0</float>
+					<Color3 name="BorderColor3">4281089616</Color3>
+					<int name="BorderSizePixel">1</int>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<string name="Name">border</string>
+					<UDim2 name="Position">
+						<XS>0</XS>
+						<XO>0</XO>
+						<YS>1</YS>
+						<YO>27</YO>
+					</UDim2>
+					<float name="Rotation">0</float>
+					<UDim2 name="Size">
+						<XS>0.796000004</XS>
+						<XO>0</XO>
+						<YS>0</YS>
+						<YO>2</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<token name="Style">0</token>
+					<bool name="Visible">true</bool>
+					<int name="ZIndex">1</int>
+				</Properties>
+			</Item>
+			<Item class="TextLabel" referent="RBXEC5354AC18F64E4A8802FFD199C4D5ED">
+				<Properties>
+					<bool name="Active">false</bool>
+					<Color3 name="BackgroundColor3">4294967295</Color3>
+					<float name="BackgroundTransparency">1</float>
+					<Color3 name="BorderColor3">4279970357</Color3>
+					<int name="BorderSizePixel">1</int>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<token name="Font">3</token>
+					<token name="FontSize">5</token>
+					<string name="Name">TextLabel</string>
+					<UDim2 name="Position">
+						<XS>0</XS>
+						<XO>0</XO>
+						<YS>1.20000005</YS>
+						<YO>0</YO>
+					</UDim2>
+					<float name="Rotation">0</float>
+					<UDim2 name="Size">
+						<XS>0.699999988</XS>
+						<XO>0</XO>
+						<YS>0</YS>
+						<YO>100</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<string name="Text">This is a temporary GUI-front! It will be much better looking once I actually finish it. Thanks.</string>
+					<Color3 name="TextColor3">4291615443</Color3>
+					<bool name="TextScaled">true</bool>
+					<Color3 name="TextStrokeColor3">4278190080</Color3>
+					<float name="TextStrokeTransparency">0.300000012</float>
+					<float name="TextTransparency">0</float>
+					<bool name="TextWrapped">true</bool>
+					<token name="TextXAlignment">2</token>
+					<token name="TextYAlignment">1</token>
+					<bool name="Visible">true</bool>
+					<int name="ZIndex">1</int>
+				</Properties>
+			</Item>
+		</Item>
+	</Item>
+</roblox>
