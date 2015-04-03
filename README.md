@@ -4,8 +4,6 @@ ProCore (short for Professional Core) is a complete replacement to the shitty Co
 
 The design is inspired by Andy Liang, which you can see here:
 
-
-
 http://network.artcenter.edu/gallery/18220105/ROBLOX
 
 # Development
