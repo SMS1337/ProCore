@@ -5,7 +5,7 @@
 	Warning! If you have firewall "ro-ware" in your game, it may break the chat. Or vice-versa. 	
 --]]
 
--- This is an API (correct term?) to prompt moderation shit.
+-- This is an API (correct term?) to prompt moderation.
 function promptModeration(player)
 
 	-- Connect compatible moderation systems here for gold text
@@ -94,7 +94,7 @@ function generateMessage(msg,player)
 		nameLabel.Text=" "..player.Name..": " wait() --For some reason it was failing without a delay.
 	end
 		--Finish the generation for names
-		nameLabel.Size=UDim2.new(0,string.len(nameLabel.Text)*7,1,0) -- Textbounds is a fucktard
+		nameLabel.Size=UDim2.new(0,string.len(nameLabel.Text)*7,1,0)
 		nameLabel.TextColor3=BrickColor.White().Color
 		nameLabel.TextStrokeTransparency=.8
 		nameLabel.Parent=newFrame
@@ -107,7 +107,7 @@ function generateMessage(msg,player)
 		--The textlabel to hold the message
 	local textLabel=Instance.new'TextLabel'
 		textLabel.Text=msg -- Don't judge.
-		textLabel.Size=UDim2.new(0,string.len(textLabel.Text)*8.9,1,0) --Calculate the size. Because TextBounds is a PIECE OF SHIT.
+		textLabel.Size=UDim2.new(0,string.len(textLabel.Text)*8.9,1,0) --Calculate the size. Because TextBounds sucks..
 		textLabel.TextColor3=BrickColor.White().Color 
 		textLabel.TextStrokeTransparency=0.8 --Text shadow
 		textLabel.BackgroundTransparency=1
