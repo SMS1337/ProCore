@@ -3,8 +3,6 @@
 	It basically creates a trigger in Workspace and then renders it and loops it through each player.
 	
 	Warning! If you have firewall "ro-ware" in your game, it may break the chat. Or vice-versa. 	
-	
-	Need to do: Clean this fucking mess up. Ugly coding, I know lol.
 --]]
 
 -- This is an API (correct term?) to prompt moderation shit.
@@ -52,7 +50,7 @@ function deliver(instanc)
 		if a.PlayerGui:findFirstChild'chatGui' then
 			for _,b in pairs(a.PlayerGui.chatGui.Frame:GetChildren()) do
 				if b:IsA'Frame' and b.Name=='message' then
-					b:TweenPosition(UDim2.new(0,0,1,b.Position.Y.Offset-sizeX),"Out","Linear",.2,true)
+					b:TweenPosition(UDim2.new(0,0,1,b.Position.Y.Offset-sizeX),"Out","Linear",.05,true)
 					if b.Position.Y.Offset < triggerdel then -- Most likely going to scale this in the future. 
 						b:Destroy()
 					end
@@ -61,7 +59,7 @@ function deliver(instanc)
 			local newMsg=instanc:Clone()
 			newMsg.Parent=a.PlayerGui.chatGui.Frame
 				newMsg.Position=UDim2.new(-1,0,1,sizeX-sizeX*2)--To make sure it animates correctly
-				newMsg:TweenPosition(UDim2.new(0,0,1,sizeX-sizeX*2),"Out","Linear",.2,true)
+				newMsg:TweenPosition(UDim2.new(0,0,1,sizeX-sizeX*2),"Out","Linear",.05,true)
 		end
 	end
 end
@@ -77,10 +75,10 @@ function generateMessage(msg,player)
 
 	--Create the circles (to show teamcolors)
 	local circ=Instance.new'ImageLabel'
-	local circsize=18
+	local circsize=15
 		circ.Parent=newFrame
 		circ.Size=UDim2.new(0,circsize,0,circsize)
-		circ.Position=UDim2.new(0,2,0.5,(circsize-circsize*2)/2)
+		circ.Position=UDim2.new(0,3,0.5,(circsize-circsize*2)/2)
 		circ.Image="http://www.roblox.com/asset/?id="..203147548
 		circ.ImageColor3=player.TeamColor.Color
 		circ.Transparency=1
