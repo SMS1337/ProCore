@@ -3,6 +3,8 @@
 	It basically creates a trigger in Workspace and then renders it and loops it through each player.
 	
 	Warning! If you have firewall "ro-ware" in your game, it may break the chat. Or vice-versa. 	
+	
+	Need to do: Clean this fucking mess up. Ugly coding, I know lol.
 --]]
 
 -- This is an API (correct term?) to prompt moderation shit.
@@ -24,7 +26,7 @@ function rgb(r,g,b)
 	return Color3.new(r/165,g/165,b/165)
 end
 
-sizeX=16
+sizeX=18
 
 ----------------------------------------------------------------------------------------------------------- ACTUAL SCRIPT
 
@@ -69,51 +71,44 @@ function generateMessage(msg,player)
 	--Create the frame to hold the name + message.
 	local newFrame=Instance.new'Frame'
 		newFrame.Size=UDim2.new(1,0,0,sizeX)
-		newFrame.Transparency=0.5
-		newFrame.BackgroundColor3=player.TeamColor.Color
+		newFrame.Transparency=1 -- Invisible!
 		newFrame.Position=UDim2.new(0,0,.9,-sizeX)
 		newFrame.Name="message" -- We'll use this 
-		newFrame.BorderSizePixel=0
 		
 	--Create the name
 	local nameLabel=Instance.new'TextLabel'
 	
 	--Ths following "if" statement will detect if the player is using nicknames. Long "if" statement warning.
 	if player:findFirstChild'.nickname' and player[".nickname"]:IsA'StringValue' and player[".nickname"].Value~=string.rep(" ",string.len(player[".nickname"].Value)) and string.len(player[".nickname"].Value)<21 then
-			nameLabel.Text=" ~"..player[".nickname"].Value.." "
+			nameLabel.Text=" ~"..player[".nickname"].Value..": "
 	else
 		--If there is no nickname, just use regular name.
-		nameLabel.Text=" "..player.Name.." " wait() --NAME
+		nameLabel.Text=" "..player.Name..": " wait() --For some reason it was failing without a delay.
 	end
 	
 		--Finish the generation
 		nameLabel.Size=UDim2.new(0,string.len(nameLabel.Text)*7,1,0) -- Textbounds is a fucktard
-		nameLabel.TextColor3=BrickColor.White().Color
-		nameLabel.BackgroundColor3=BrickColor.Black().Color
-		nameLabel.TextStrokeTransparency=0.7
+		nameLabel.TextColor3=player.TeamColor.Color
+		nameLabel.TextStrokeTransparency=.9
 		nameLabel.Parent=newFrame
-		nameLabel.TextScaled=true
-		nameLabel.Font = Enum.Font.SourceSansBold
---		nameLabel.TextXAlignment = Enum.TextXAlignment.Right
-		nameLabel.BackgroundTransparency=0.6
+		nameLabel.TextScaled=true ----EHHHHHHHHHHHHHH Not sure if I should keep it scaled or not. Could cause issues.
+		nameLabel.Font = Enum.Font.ArialBold
+		nameLabel.BackgroundTransparency=1 -- invisible!
 		nameLabel.BorderSizePixel=0
-		nameLabel.ZIndex=2
 		
 		--The textlabel to hold the message
 	local textLabel=Instance.new'TextLabel'
-		textLabel.Text=" "..msg.." "
-		textLabel.Size=UDim2.new(0,string.len(textLabel.Text)*9,1,0)
+		textLabel.Text=msg -- Don't judge.
+		textLabel.Size=UDim2.new(0,string.len(textLabel.Text)*8.9,1,0) --Calculate the size. Because TextBounds is a PIECE OF SHIT.
 		textLabel.TextColor3=BrickColor.White().Color 
-		textLabel.TextStrokeTransparency=0.7
+		textLabel.TextStrokeTransparency=0.8 --Text shadow
 		textLabel.BackgroundTransparency=1
-		textLabel.BackgroundColor3=player.TeamColor.Color
 		textLabel.BorderSizePixel=0
 		textLabel.Parent=newFrame
 		textLabel.Position = UDim2.new(0,string.len(nameLabel.Text)*7,0,0)
 		textLabel.TextScaled=true
 		textLabel.Font = Enum.Font.SourceSansBold
 		textLabel.TextXAlignment = Enum.TextXAlignment.Left
-		textLabel.ZIndex=2
 		
 	-- Set the size at the end.
 	newFrame.Size=UDim2.new(0,nameLabel.Size.X.Offset + textLabel.Size.X.Offset,0,16)
