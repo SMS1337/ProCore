@@ -26,7 +26,7 @@ function rgb(r,g,b)
 	return Color3.new(r/165,g/165,b/165)
 end
 
-sizeX=18
+sizeX=20
 
 ----------------------------------------------------------------------------------------------------------- ACTUAL SCRIPT
 
@@ -52,7 +52,7 @@ function deliver(instanc)
 		if a.PlayerGui:findFirstChild'chatGui' then
 			for _,b in pairs(a.PlayerGui.chatGui.Frame:GetChildren()) do
 				if b:IsA'Frame' and b.Name=='message' then
-					b:TweenPosition(UDim2.new(0,0,1,b.Position.Y.Offset-sizeX),"Out","Linear",.1,true)
+					b:TweenPosition(UDim2.new(0,0,1,b.Position.Y.Offset-sizeX),"Out","Linear",.2,true)
 					if b.Position.Y.Offset < triggerdel then -- Most likely going to scale this in the future. 
 						b:Destroy()
 					end
@@ -61,7 +61,7 @@ function deliver(instanc)
 			local newMsg=instanc:Clone()
 			newMsg.Parent=a.PlayerGui.chatGui.Frame
 				newMsg.Position=UDim2.new(-1,0,1,sizeX-sizeX*2)--To make sure it animates correctly
-				newMsg:TweenPosition(UDim2.new(0,0,1,sizeX-sizeX*2),"Out","Linear",.1,true)
+				newMsg:TweenPosition(UDim2.new(0,0,1,sizeX-sizeX*2),"Out","Linear",.2,true)
 		end
 	end
 end
@@ -74,7 +74,17 @@ function generateMessage(msg,player)
 		newFrame.Transparency=1 -- Invisible!
 		newFrame.Position=UDim2.new(0,0,.9,-sizeX)
 		newFrame.Name="message" -- We'll use this 
-		
+
+	--Create the circles (to show teamcolors)
+	local circ=Instance.new'ImageLabel'
+	local circsize=18
+		circ.Parent=newFrame
+		circ.Size=UDim2.new(0,circsize,0,circsize)
+		circ.Position=UDim2.new(0,2,0.5,(circsize-circsize*2)/2)
+		circ.Image="http://www.roblox.com/asset/?id="..203147548
+		circ.ImageColor3=player.TeamColor.Color
+		circ.Transparency=1
+
 	--Create the name
 	local nameLabel=Instance.new'TextLabel'
 	
@@ -85,16 +95,16 @@ function generateMessage(msg,player)
 		--If there is no nickname, just use regular name.
 		nameLabel.Text=" "..player.Name..": " wait() --For some reason it was failing without a delay.
 	end
-	
-		--Finish the generation
+		--Finish the generation for names
 		nameLabel.Size=UDim2.new(0,string.len(nameLabel.Text)*7,1,0) -- Textbounds is a fucktard
-		nameLabel.TextColor3=player.TeamColor.Color
-		nameLabel.TextStrokeTransparency=.9
+		nameLabel.TextColor3=BrickColor.White().Color
+		nameLabel.TextStrokeTransparency=.8
 		nameLabel.Parent=newFrame
 		nameLabel.TextScaled=true ----EHHHHHHHHHHHHHH Not sure if I should keep it scaled or not. Could cause issues.
 		nameLabel.Font = Enum.Font.ArialBold
 		nameLabel.BackgroundTransparency=1 -- invisible!
 		nameLabel.BorderSizePixel=0
+		nameLabel.Position=nameLabel.Position+UDim2.new(0,circsize,0,0)
 		
 		--The textlabel to hold the message
 	local textLabel=Instance.new'TextLabel'
@@ -105,11 +115,12 @@ function generateMessage(msg,player)
 		textLabel.BackgroundTransparency=1
 		textLabel.BorderSizePixel=0
 		textLabel.Parent=newFrame
-		textLabel.Position = UDim2.new(0,string.len(nameLabel.Text)*7,0,0)
+		textLabel.Position = UDim2.new(0,string.len(nameLabel.Text)*7+circsize,0,0)
 		textLabel.TextScaled=true
 		textLabel.Font = Enum.Font.SourceSansBold
 		textLabel.TextXAlignment = Enum.TextXAlignment.Left
 		
+
 	-- Set the size at the end.
 	newFrame.Size=UDim2.new(0,nameLabel.Size.X.Offset + textLabel.Size.X.Offset,0,16)
 
