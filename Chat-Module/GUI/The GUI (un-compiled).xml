@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScreenGui" referent="RBX2693801B8D7844EDA4150533F0BB1525">
+	<Item class="ScreenGui" referent="RBX1B64744F772B41A1B7D9CC3BB90C8F68">
 		<Properties>
 			<string name="Name">chatGui</string>
 		</Properties>
-		<Item class="Frame" referent="RBX337DE2D4F1FC4991AEFBA7086283AF14">
+		<Item class="Frame" referent="RBX7F6EB6BFA8234D3A9A8B7E0C6C40367E">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -34,7 +34,7 @@
 				<int name="ZIndex">1</int>
 			</Properties>
 		</Item>
-		<Item class="Frame" referent="RBX079220A364214660BD795B3506BF21CA">
+		<Item class="Frame" referent="RBXDCA60D5DB6424AD8A607196575064F26">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -62,7 +62,7 @@
 				<bool name="Visible">true</bool>
 				<int name="ZIndex">1</int>
 			</Properties>
-			<Item class="TextLabel" referent="RBXB741C6B91135479EAE232E6B56476F8B">
+			<Item class="TextLabel" referent="RBX153AE63A1DAD4CCE9AF0C087D68C767E">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -101,7 +101,7 @@
 					<int name="ZIndex">2</int>
 				</Properties>
 			</Item>
-			<Item class="TextBox" referent="RBX8D901ED9B3D34127824804A184054DE1">
+			<Item class="TextBox" referent="RBX48C8685AB3FE44B18D4B749E6ED75496">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -142,15 +142,22 @@
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="LocalScript" referent="RBX34CFA75E871B4F76B83CD6E32BCBDDFB">
+			<Item class="LocalScript" referent="RBX72587F540F1C4AA599B8E46C79276A3C">
 				<Properties>
 					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">handle</string>
 					<ProtectedString name="Source"><![CDATA[-- I WARN YOU. THIS SCRIPT IS GROSS.
+
+--Generic variables
 repeat wait() print'Waiting for player to load' until game.Players.LocalPlayer
 local player = game.Players.LocalPlayer
 	local mouse = player:GetMouse()
+
+wait(2) -- For some reason it is running to fast lmao. 
+
+--more variables
+SendBtn=script.Parent.MobileSendBtn
 typer = script.Parent.input
 maxnumber=150
 stockphrase = 'Press "/" to type.'
@@ -159,6 +166,13 @@ UID = game:GetService("UserInputService")
 --Remove CoreGUI. 
 local StarterGui = game:GetService('StarterGui')
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+
+--Temporary fix for mobile users
+if UID.TouchEnabled==true then
+	script.Parent.Position=UDim2.new(0.01,0,0.55,0)
+	stockphrase='Tap to start typing.'
+	SendBtn.Visible=true
+end
 	
 --Captures focus	
 function animate()
@@ -181,6 +195,22 @@ function detectMention(message)
 	end
 end
 
+-- To send the message
+function send()
+	if typer.Text ~= stockphrase and typer.Text ~= "" and typer.Text ~=" " then
+		--Good good, let's continue.
+		if workspace:findFirstChild'ProChat' then
+			workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
+			typer.Text = stockphrase
+			for i = 0,0.5,.1 do
+				game:GetService("RunService").RenderStepped:wait()
+				typer.TextTransparency=i
+				script.Parent.char.TextTransparency=i
+			end
+		end		
+	end
+end
+
 --Catches the "/" keydown
 mouse.KeyUp:connect(function(key)
 	if key=="/" then
@@ -191,19 +221,12 @@ end)
 --workspace["Chat Servers"].ChatStrapper:FireServer(msg)
 UID.InputBegan:connect(function(input)
 	if input.KeyCode == Enum.KeyCode.Return then
-		if typer.Text ~= stockphrase and typer.Text ~= "" and typer.Text ~=" " then
-			--Good good, let's continue.
-			if workspace:findFirstChild'ProChat' then
-				workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
-				typer.Text = stockphrase
-				for i = 0,0.5,.1 do
-					game:GetService("RunService").RenderStepped:wait()
-					typer.TextTransparency=i
-					script.Parent.char.TextTransparency=i
-				end
-			end		
-		end
+		send()
 	end
+end)
+
+SendBtn.MouseButton1Click:connect(function()
+	send()
 end)
 
 script.Parent.Parent.Frame.ChildAdded:connect(function(c)
@@ -237,6 +260,49 @@ while wait() do
 	end 
 	
 end]]></ProtectedString>
+				</Properties>
+			</Item>
+			<Item class="TextButton" referent="RBX96F7348118D9431C8287974C9BDD14C9">
+				<Properties>
+					<bool name="Active">true</bool>
+					<bool name="AutoButtonColor">true</bool>
+					<Color3 name="BackgroundColor3">4281637083</Color3>
+					<float name="BackgroundTransparency">0</float>
+					<Color3 name="BorderColor3">4281637083</Color3>
+					<int name="BorderSizePixel">3</int>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<token name="Font">3</token>
+					<token name="FontSize">7</token>
+					<bool name="Modal">false</bool>
+					<string name="Name">MobileSendBtn</string>
+					<UDim2 name="Position">
+						<XS>0</XS>
+						<XO>0</XO>
+						<YS>0</YS>
+						<YO>-30</YO>
+					</UDim2>
+					<float name="Rotation">0</float>
+					<bool name="Selected">false</bool>
+					<UDim2 name="Size">
+						<XS>0.730000019</XS>
+						<XO>0</XO>
+						<YS>0</YS>
+						<YO>20</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<token name="Style">0</token>
+					<string name="Text">Send</string>
+					<Color3 name="TextColor3">4293848814</Color3>
+					<bool name="TextScaled">false</bool>
+					<Color3 name="TextStrokeColor3">4293848814</Color3>
+					<float name="TextStrokeTransparency">0.800000012</float>
+					<float name="TextTransparency">0</float>
+					<bool name="TextWrapped">false</bool>
+					<token name="TextXAlignment">2</token>
+					<token name="TextYAlignment">1</token>
+					<bool name="Visible">false</bool>
+					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
 		</Item>
