@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScreenGui" referent="RBX1B64744F772B41A1B7D9CC3BB90C8F68">
+	<Item class="ScreenGui" referent="RBXDC01DD2C1B214805AB1700F1A1C0A309">
 		<Properties>
 			<string name="Name">chatGui</string>
 		</Properties>
-		<Item class="Frame" referent="RBX7F6EB6BFA8234D3A9A8B7E0C6C40367E">
+		<Item class="Frame" referent="RBX8D47317AFB0A45548FFCFD1214F437F0">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -34,7 +34,7 @@
 				<int name="ZIndex">1</int>
 			</Properties>
 		</Item>
-		<Item class="Frame" referent="RBXDCA60D5DB6424AD8A607196575064F26">
+		<Item class="Frame" referent="RBX261CB11FE2144B8391D8CDBE7997D759">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -62,7 +62,7 @@
 				<bool name="Visible">true</bool>
 				<int name="ZIndex">1</int>
 			</Properties>
-			<Item class="TextLabel" referent="RBX153AE63A1DAD4CCE9AF0C087D68C767E">
+			<Item class="TextLabel" referent="RBX2ABC491C82644408A8A540B2C82C01DF">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -101,7 +101,7 @@
 					<int name="ZIndex">2</int>
 				</Properties>
 			</Item>
-			<Item class="TextBox" referent="RBX48C8685AB3FE44B18D4B749E6ED75496">
+			<Item class="TextBox" referent="RBXF02C07CBF9EF4003B775D8B9DA2115B1">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -142,7 +142,7 @@
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="LocalScript" referent="RBX72587F540F1C4AA599B8E46C79276A3C">
+			<Item class="LocalScript" referent="RBX0379FF5B8F55402F9AF8F4B04201385D">
 				<Properties>
 					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
@@ -171,6 +171,7 @@ StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 if UID.TouchEnabled==true then
 	script.Parent.Position=UDim2.new(0.01,0,0.55,0)
 	stockphrase='Tap to start typing.'
+	typer.Text=stockphrase
 	SendBtn.Visible=true
 end
 	
@@ -262,7 +263,7 @@ while wait() do
 end]]></ProtectedString>
 				</Properties>
 			</Item>
-			<Item class="TextButton" referent="RBX96F7348118D9431C8287974C9BDD14C9">
+			<Item class="TextButton" referent="RBXEE30FF834D0F43AE9151693DD15D26C4">
 				<Properties>
 					<bool name="Active">true</bool>
 					<bool name="AutoButtonColor">true</bool>
