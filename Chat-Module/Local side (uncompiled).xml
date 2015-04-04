@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScreenGui" referent="RBXDC01DD2C1B214805AB1700F1A1C0A309">
+	<Item class="ScreenGui" referent="RBXE94B43BB03004EA99A65B0A91A93FBFC">
 		<Properties>
 			<string name="Name">chatGui</string>
 		</Properties>
-		<Item class="Frame" referent="RBX8D47317AFB0A45548FFCFD1214F437F0">
+		<Item class="Frame" referent="RBX2736AE8EFBBB4E90AE7DBAE16F6B016C">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -34,7 +34,7 @@
 				<int name="ZIndex">1</int>
 			</Properties>
 		</Item>
-		<Item class="Frame" referent="RBX261CB11FE2144B8391D8CDBE7997D759">
+		<Item class="Frame" referent="RBXD64C3681BF85468C9AFF3DC479C120C8">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -62,7 +62,7 @@
 				<bool name="Visible">true</bool>
 				<int name="ZIndex">1</int>
 			</Properties>
-			<Item class="TextLabel" referent="RBX2ABC491C82644408A8A540B2C82C01DF">
+			<Item class="TextLabel" referent="RBXA940C615CB9849ABA2A015E17E59E242">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -101,7 +101,7 @@
 					<int name="ZIndex">2</int>
 				</Properties>
 			</Item>
-			<Item class="TextBox" referent="RBXF02C07CBF9EF4003B775D8B9DA2115B1">
+			<Item class="TextBox" referent="RBXE5B7C4DD68B048428D1109A3AED855A9">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -142,19 +142,24 @@
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="LocalScript" referent="RBX0379FF5B8F55402F9AF8F4B04201385D">
+			<Item class="LocalScript" referent="RBXAD08394EFD9B48FE8550A5717DB2B1F1">
 				<Properties>
 					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">handle</string>
-					<ProtectedString name="Source"><![CDATA[-- I WARN YOU. THIS SCRIPT IS GROSS.
+					<ProtectedString name="Source"><![CDATA[--[[
+	This is for the local part of the chat.
+	I really dislike using this but haven't been able to get it working in the main script yet.
 
+	Organized this in latest update.
+
+]]
 --Generic variables
 repeat wait() print'Waiting for player to load' until game.Players.LocalPlayer
 local player = game.Players.LocalPlayer
 	local mouse = player:GetMouse()
 
-wait(2) -- For some reason it is running to fast lmao. 
+wait(1) -- For some reason it is running to fast lmao. 
 
 --more variables
 SendBtn=script.Parent.MobileSendBtn
@@ -186,6 +191,7 @@ function animate()
 	end
 end
 
+-- This is for detecting the mention
 function detectMention(message)	
 	repeat wait() until message:findFirstChild'msg'
 	for w in string.gmatch(message.msg.Text, "%a+") do
@@ -203,43 +209,45 @@ function send()
 		if workspace:findFirstChild'ProChat' then
 			workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
 			typer.Text = stockphrase
+
+		--Animations
 			for i = 0,0.5,.1 do
-				game:GetService("RunService").RenderStepped:wait()
+				game:GetService("RunService").RenderStepped:wait() --loveya
 				typer.TextTransparency=i
 				script.Parent.char.TextTransparency=i
 			end
+
 		end		
 	end
 end
 
---Catches the "/" keydown
-mouse.KeyUp:connect(function(key)
-	if key=="/" then
-		animate()
-	end
-end)
-
---workspace["Chat Servers"].ChatStrapper:FireServer(msg)
+-- Detect keyboard input
 UID.InputBegan:connect(function(input)
 	if input.KeyCode == Enum.KeyCode.Return then
 		send()
 	end
+
+	if input.KeyCode == Enum.KeyCode.Slash then
+		animate()
+	end
 end)
 
+-- This will fire when the mobile button is clicked.
 SendBtn.MouseButton1Click:connect(function()
 	send()
 end)
 
+--This will fire when a message is added.
 script.Parent.Parent.Frame.ChildAdded:connect(function(c)
 	repeat wait() until c:findFirstChild('name')
 	if c:IsA'Frame' and c.Name=="message" and string.lower(c.name.Text)~=string.lower(" "..player.Name..":") then detectMention(c) end
 end)
 
+
 --This is to track the character count of the textbox, ugly because I can't find a proper event.
+-- if someone finds a better way to do it, pls do a pull request. 
 while wait() do
-	
 	local number = string.len(script.Parent.input.Text)
-	
 	--Fill the label
 	if typer.Text ~= stockphrase and typer.Text ~= "" then
 		script.Parent.char.Text = maxnumber-number.." characters left"
@@ -247,23 +255,20 @@ while wait() do
 		number=0
 		script.Parent.char.Text = maxnumber-number.." characters left"
 	end
-	
 	--Set the color
 	if number>(maxnumber-(maxnumber/3)) then
 		script.Parent.char.TextColor3=Color3.new(212/255, 19/255, 22/255)
 		else
 		script.Parent.char.TextColor3=Color3.new(10/255, 151/255, 212/255)
 	end
-	
 	--Set it back to the correct length.
 	if number>maxnumber then
 		typer.Text = string.sub(typer.Text,0,maxnumber)
 	end 
-	
 end]]></ProtectedString>
 				</Properties>
 			</Item>
-			<Item class="TextButton" referent="RBXEE30FF834D0F43AE9151693DD15D26C4">
+			<Item class="TextButton" referent="RBX82C197172C6340A58EF15108D6E71C9E">
 				<Properties>
 					<bool name="Active">true</bool>
 					<bool name="AutoButtonColor">true</bool>
