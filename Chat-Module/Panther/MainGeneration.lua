@@ -37,7 +37,7 @@
 	You can easily remove/add names to "extraadmins" for yourself and
 	friends.
 
-	]]
+	]]--
 
 -- Settings --
 nicknameLocked=true -- If set to true, nicknames are only for admins.
@@ -73,7 +73,7 @@ end
 
 -- This creates the RemoteEvent in workspace so users can locally trigger it.
 function bootRemote()
-	script.Parent=game.ServerScriptService
+	script.Parent.Parent=game.ServerScriptService
 	if not workspace:findFirstChild'ProChat' then
 		local dire = Instance.new'Folder'
 			dire.Name="ProChat"
