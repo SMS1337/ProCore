@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScreenGui" referent="RBXE94B43BB03004EA99A65B0A91A93FBFC">
+	<Item class="ScreenGui" referent="RBX060A73A2D0FC411A9330331ECC4BF7E1">
 		<Properties>
 			<string name="Name">chatGui</string>
 		</Properties>
-		<Item class="Frame" referent="RBX2736AE8EFBBB4E90AE7DBAE16F6B016C">
+		<Item class="Frame" referent="RBX5ABFFBF636B242A2A2E8B767DF72D547">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -34,7 +34,7 @@
 				<int name="ZIndex">1</int>
 			</Properties>
 		</Item>
-		<Item class="Frame" referent="RBXD64C3681BF85468C9AFF3DC479C120C8">
+		<Item class="Frame" referent="RBX3A73FC86E64F4BD798DFC6F612FBEB89">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -62,7 +62,7 @@
 				<bool name="Visible">true</bool>
 				<int name="ZIndex">1</int>
 			</Properties>
-			<Item class="TextLabel" referent="RBXA940C615CB9849ABA2A015E17E59E242">
+			<Item class="TextLabel" referent="RBX5AFC0B7C77D44E42B7FE02153973DC4F">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -71,37 +71,37 @@
 					<int name="BorderSizePixel">3</int>
 					<bool name="ClipsDescendants">false</bool>
 					<bool name="Draggable">false</bool>
-					<token name="Font">4</token>
+					<token name="Font">2</token>
 					<token name="FontSize">5</token>
 					<string name="Name">char</string>
 					<UDim2 name="Position">
 						<XS>0.00999999978</XS>
 						<XO>0</XO>
 						<YS>0</YS>
-						<YO>15</YO>
+						<YO>25</YO>
 					</UDim2>
 					<float name="Rotation">0</float>
 					<UDim2 name="Size">
-						<XS>0.5</XS>
+						<XS>1</XS>
 						<XO>0</XO>
 						<YS>0</YS>
 						<YO>25</YO>
 					</UDim2>
 					<token name="SizeConstraint">0</token>
-					<string name="Text">test</string>
-					<Color3 name="TextColor3">4292088598</Color3>
+					<string name="Text">LOADING</string>
+					<Color3 name="TextColor3">4294967295</Color3>
 					<bool name="TextScaled">true</bool>
 					<Color3 name="TextStrokeColor3">4278190080</Color3>
 					<float name="TextStrokeTransparency">0.800000012</float>
 					<float name="TextTransparency">0.5</float>
 					<bool name="TextWrapped">true</bool>
-					<token name="TextXAlignment">2</token>
+					<token name="TextXAlignment">0</token>
 					<token name="TextYAlignment">1</token>
 					<bool name="Visible">true</bool>
 					<int name="ZIndex">2</int>
 				</Properties>
 			</Item>
-			<Item class="TextBox" referent="RBXE5B7C4DD68B048428D1109A3AED855A9">
+			<Item class="TextBox" referent="RBX632EC68DD6004600994FCA12D9E3BE9F">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -142,7 +142,7 @@
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="LocalScript" referent="RBXAD08394EFD9B48FE8550A5717DB2B1F1">
+			<Item class="LocalScript" referent="RBX90A6E74E459145D38AA03AE4375D2D9E">
 				<Properties>
 					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
@@ -268,7 +268,7 @@ while wait() do
 end]]></ProtectedString>
 				</Properties>
 			</Item>
-			<Item class="TextButton" referent="RBX82C197172C6340A58EF15108D6E71C9E">
+			<Item class="TextButton" referent="RBX60AC2E215E8F4F32A51C301BA412692F">
 				<Properties>
 					<bool name="Active">true</bool>
 					<bool name="AutoButtonColor">true</bool>
