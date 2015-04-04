@@ -22,7 +22,6 @@ function animate()
 	end
 end
 
--- "name" is not a valid member of frame. the shit?
 function detectMention(message)	
 	repeat wait() until message:findFirstChild'msg'
 	for w in string.gmatch(message.msg.Text, "%a+") do
@@ -32,8 +31,6 @@ function detectMention(message)
 	    end
 	end
 end
-----------------------------------------------------
-
 
 --Catches the "/" keydown
 mouse.KeyUp:connect(function(key)
@@ -61,7 +58,7 @@ UID.InputBegan:connect(function(input)
 end)
 
 script.Parent.Parent.Frame.ChildAdded:connect(function(c)
-	print(string.lower(c.name.Text).." "..string.lower(player.Name))
+	repeat wait() until c:findFirstChild('name')
 	if c:IsA'Frame' and c.Name=="message" and string.lower(c.name.Text)~=string.lower(" "..player.Name..":") then detectMention(c) end
 end)
 
