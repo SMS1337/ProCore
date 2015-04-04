@@ -8,16 +8,16 @@
 	If you have an issue, report it on GitHub please.
 	
 	-----------------------------------------------------------------
-	|															                                 	|
-	|					/!\ LICENSE AND AGREEMENT				                    	|
-	|		-Only re-release this if you have made changes.          		|
-	|		-By editing scripts we won't help fix your issues.	      	|
-	|														                                		|
-	|													                                 			|
-	|					  This is FREE software.			                    		|
-	|			 If you paid for it, get your money back.		            	|
-	|				  And report the seller to ROBLOX.				              |
-	|															                                	|
+	|																|
+	|					/!\ LICENSE AND AGREEMENT					|
+	|		-Only re-release this if you have made changes. 		|
+	|		-By editing scripts we won't help fix your issues.		|
+	|																|
+	|																|
+	|					  This is FREE software.					|
+	|			 If you paid for it, get your money back.			|
+	|				  And report the seller to ROBLOX.				|
+	|																|
 	-----------------------------------------------------------------
 	
 	v1.0.0
