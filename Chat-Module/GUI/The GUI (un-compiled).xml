@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScreenGui" referent="RBXB623E6DCA9CA4A559E202A3A4234FC80">
+	<Item class="ScreenGui" referent="RBX2693801B8D7844EDA4150533F0BB1525">
 		<Properties>
 			<string name="Name">chatGui</string>
 		</Properties>
-		<Item class="Frame" referent="RBX453EFA33B8454B74B796D53B13C2ED77">
+		<Item class="Frame" referent="RBX337DE2D4F1FC4991AEFBA7086283AF14">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -26,7 +26,7 @@
 					<XS>0</XS>
 					<XO>500</XO>
 					<YS>0</YS>
-					<YO>130</YO>
+					<YO>200</YO>
 				</UDim2>
 				<token name="SizeConstraint">0</token>
 				<token name="Style">0</token>
@@ -34,7 +34,7 @@
 				<int name="ZIndex">1</int>
 			</Properties>
 		</Item>
-		<Item class="Frame" referent="RBXDECC880034984E62AC2D6CDB3B6A4211">
+		<Item class="Frame" referent="RBX079220A364214660BD795B3506BF21CA">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -62,7 +62,7 @@
 				<bool name="Visible">true</bool>
 				<int name="ZIndex">1</int>
 			</Properties>
-			<Item class="TextLabel" referent="RBX79B9903EEB4F44D8B935BDDF05041DAE">
+			<Item class="TextLabel" referent="RBXB741C6B91135479EAE232E6B56476F8B">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -75,12 +75,12 @@
 					<token name="FontSize">5</token>
 					<string name="Name">char</string>
 					<UDim2 name="Position">
-						<XS>0.100000001</XS>
+						<XS>0.00999999978</XS>
 						<XO>0</XO>
 						<YS>0</YS>
-						<YO>35</YO>
+						<YO>15</YO>
 					</UDim2>
-					<float name="Rotation">-10</float>
+					<float name="Rotation">0</float>
 					<UDim2 name="Size">
 						<XS>0.5</XS>
 						<XO>0</XO>
@@ -101,7 +101,7 @@
 					<int name="ZIndex">2</int>
 				</Properties>
 			</Item>
-			<Item class="TextBox" referent="RBX73189AF9E2444D0985A5DB5D4C73D291">
+			<Item class="TextBox" referent="RBX8D901ED9B3D34127824804A184054DE1">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -119,9 +119,9 @@
 						<XS>0</XS>
 						<XO>0</XO>
 						<YS>0</YS>
-						<YO>-60</YO>
+						<YO>0</YO>
 					</UDim2>
-					<float name="Rotation">-10</float>
+					<float name="Rotation">0</float>
 					<UDim2 name="Size">
 						<XS>5</XS>
 						<XO>0</XO>
@@ -142,12 +142,13 @@
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="LocalScript" referent="RBXAF3C0F6A30B443548DF0B5F859D1DB98">
+			<Item class="LocalScript" referent="RBX34CFA75E871B4F76B83CD6E32BCBDDFB">
 				<Properties>
 					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">handle</string>
 					<ProtectedString name="Source"><![CDATA[-- I WARN YOU. THIS SCRIPT IS GROSS.
+repeat wait() print'Waiting for player to load' until game.Players.LocalPlayer
 local player = game.Players.LocalPlayer
 	local mouse = player:GetMouse()
 typer = script.Parent.input
@@ -167,6 +168,16 @@ function animate()
 		game:GetService("RunService").RenderStepped:wait()
 		typer.TextTransparency=i
 		script.Parent.char.TextTransparency=i
+	end
+end
+
+function detectMention(message)	
+	repeat wait() until message:findFirstChild'msg'
+	for w in string.gmatch(message.msg.Text, "%a+") do
+	    if string.len(w)>1 and string.lower(w)==string.lower(string.sub(player.Name,1,string.len(w))) then
+	    	message.BackgroundColor3=Color3.new(41/255, 128/255, 185/255)
+	    	message.Transparency=.7
+	    end
 	end
 end
 
@@ -193,6 +204,11 @@ UID.InputBegan:connect(function(input)
 			end		
 		end
 	end
+end)
+
+script.Parent.Parent.Frame.ChildAdded:connect(function(c)
+	repeat wait() until c:findFirstChild('name')
+	if c:IsA'Frame' and c.Name=="message" and string.lower(c.name.Text)~=string.lower(" "..player.Name..":") then detectMention(c) end
 end)
 
 --This is to track the character count of the textbox, ugly because I can't find a proper event.

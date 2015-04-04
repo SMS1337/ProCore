@@ -7,7 +7,7 @@
 
 -- This is an API (correct term?) to prompt moderation. Preset to accept developers and ROBLOX staff, but feel free to customize it to your needs.
 function promptModeration(player)
-	local extraadmins={"eprent";"merely";"seranok";"player"} -- People who get privledges but aren't in group.
+	local extraadmins={"eprent";"merely";"seranok";"player1";"player"} -- People who get privledges but aren't in group.
 
 	-- This will scan the table above to see if there is a spot for the player.
 	local function retr(player)
@@ -50,7 +50,7 @@ end
 
 --Loops through each player and moves them up + adds the newest message.
 function deliver(instanc)
-	local triggerdel=-117 -- This is to delete the ones after a certain point.
+	local triggerdel=-199 -- This is to delete the ones after a certain point.
 	for _,a in pairs(game.Players:GetChildren()) do
 		if a.PlayerGui:findFirstChild'chatGui' then
 			for _,b in pairs(a.PlayerGui.chatGui.Frame:GetChildren()) do
@@ -108,6 +108,7 @@ function generateMessage(msg,player)
 		nameLabel.BackgroundTransparency=1 -- invisible!
 		nameLabel.BorderSizePixel=0
 		nameLabel.Position=nameLabel.Position+UDim2.new(0,circsize,0,0)
+		nameLabel.Name="name"
 		
 		--The textlabel to hold the message
 	local textLabel=Instance.new'TextLabel'
@@ -122,14 +123,16 @@ function generateMessage(msg,player)
 		textLabel.TextScaled=true
 		textLabel.Font = Enum.Font.SourceSansBold
 		textLabel.TextXAlignment = Enum.TextXAlignment.Left
+		textLabel.Name="msg"
 		
 
 	-- Set the size at the end.
-	newFrame.Size=UDim2.new(0,nameLabel.Size.X.Offset + textLabel.Size.X.Offset,0,16)
+	newFrame.Size=UDim2.new(10,0,0,16)
 
 	-- If the player is connected as a moderator it will make their text gold. I should really improve this lmao.
 	if promptModeration(player) then
-		textLabel.TextColor3=rgb(241, 196, 15)
+		newFrame.BackgroundColor3=rgb(241, 196, 15)
+		newFrame.Transparency=.8
 	end
 	
 	--Shoot the function to send the message
