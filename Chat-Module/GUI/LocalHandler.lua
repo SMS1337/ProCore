@@ -1,7 +1,14 @@
 -- I WARN YOU. THIS SCRIPT IS GROSS.
+
+--Generic variables
 repeat wait() print'Waiting for player to load' until game.Players.LocalPlayer
 local player = game.Players.LocalPlayer
 	local mouse = player:GetMouse()
+
+wait(2) -- For some reason it is running to fast lmao. 
+
+--more variables
+SendBtn=script.Parent.MobileSendBtn
 typer = script.Parent.input
 maxnumber=150
 stockphrase = 'Press "/" to type.'
@@ -10,6 +17,13 @@ UID = game:GetService("UserInputService")
 --Remove CoreGUI. 
 local StarterGui = game:GetService('StarterGui')
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
+
+--Temporary fix for mobile users
+if UID.TouchEnabled==true then
+	script.Parent.Position=UDim2.new(0.01,0,0.55,0)
+	stockphrase='Tap to start typing.'
+	SendBtn.Visible=true
+end
 	
 --Captures focus	
 function animate()
@@ -32,6 +46,22 @@ function detectMention(message)
 	end
 end
 
+-- To send the message
+function send()
+	if typer.Text ~= stockphrase and typer.Text ~= "" and typer.Text ~=" " then
+		--Good good, let's continue.
+		if workspace:findFirstChild'ProChat' then
+			workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
+			typer.Text = stockphrase
+			for i = 0,0.5,.1 do
+				game:GetService("RunService").RenderStepped:wait()
+				typer.TextTransparency=i
+				script.Parent.char.TextTransparency=i
+			end
+		end		
+	end
+end
+
 --Catches the "/" keydown
 mouse.KeyUp:connect(function(key)
 	if key=="/" then
@@ -42,19 +72,12 @@ end)
 --workspace["Chat Servers"].ChatStrapper:FireServer(msg)
 UID.InputBegan:connect(function(input)
 	if input.KeyCode == Enum.KeyCode.Return then
-		if typer.Text ~= stockphrase and typer.Text ~= "" and typer.Text ~=" " then
-			--Good good, let's continue.
-			if workspace:findFirstChild'ProChat' then
-				workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
-				typer.Text = stockphrase
-				for i = 0,0.5,.1 do
-					game:GetService("RunService").RenderStepped:wait()
-					typer.TextTransparency=i
-					script.Parent.char.TextTransparency=i
-				end
-			end		
-		end
+		send()
 	end
+end)
+
+SendBtn.MouseButton1Click:connect(function()
+	send()
 end)
 
 script.Parent.Parent.Frame.ChildAdded:connect(function(c)
