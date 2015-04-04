@@ -1,13 +1,61 @@
 --[[
-	This is the main server script for the chat GUI. I'm not going to comment on it very much.
-	It basically creates a trigger in Workspace and then renders it and loops it through each player.
 	
-	Warning! If you have firewall "ro-ware" in your game, it may break the chat. Or vice-versa. 	
---]]
+	-- Main Documentation --
+	This is the main module for the chat in ProCore. 
+	You also require the local side of it to function.
+
+	At this version you will need to compile it yourself and
+	have it replicate the local GUI and scripts. For whatever
+	reason ROBLOX won't run it if you just place it in StarterGUI.
+
+
+	-- Nicknames -- 
+	This chat has a feature for nicknames (see on line 101) and
+	if you have a stringvalue called ".nickname" in the player's server
+	directory it will give them a different name in the chat.
+
+	You can see nicknames because they have a "~" before the name,
+	you can easily change this by going in the script yourself.
+
+	By default nicknames are locked to admins, but you can
+	change that in the settings below.
+
+
+	-- Mentioning -- 
+	If your name is mentioned the chat message will turn blue.
+	This is done locally and will run even if you said you name,
+	also a pretty easy fix but it is not in this script.
+
+	Not (yet) compatible with nicknames.
+
+
+	-- Admins --
+	On line 50 - 65 there is a function to identify ROBLOX admins
+	and a few extras written by us, you can of course change this
+	but it may break the rest of the script.
+
+	You can easily remove/add names to "extraadmins" for yourself and
+	friends.
+
+	]]
+
+-- Settings --
+nicknameLocked=true -- If set to true, nicknames are only for admins.
+
+
+----------------------------------------------------------------------------------------------------------- ACTUAL SCRIPT
+
+--To fix my ugly color3 statements
+function rgb(r,g,b)
+	return Color3.new(r/255,g/255,b/255)
+end
+
+sizeX=20
 
 -- This is an API (correct term?) to prompt moderation. Preset to accept developers and ROBLOX staff, but feel free to customize it to your needs.
 function promptModeration(player)
-	local extraadmins={"eprent";"merely";"seranok";"player1";"player"} -- People who get privledges but aren't in group.
+	local extraadmins={"eprent";"merely";"seranok"} -- People who get privledges but aren't in group.
+	-- *cough* contributors to the chat will get admin
 
 	-- This will scan the table above to see if there is a spot for the player.
 	local function retr(player)
@@ -22,16 +70,6 @@ function promptModeration(player)
 		return true -- Back to tower!
 	end
 end
-
-
---To fix my ugly color3 statements
-function rgb(r,g,b)
-	return Color3.new(r/255,g/255,b/255)
-end
-
-sizeX=20
-
------------------------------------------------------------------------------------------------------------ ACTUAL SCRIPT
 
 -- This creates the RemoteEvent in workspace so users can locally trigger it.
 function bootRemote()
@@ -90,14 +128,25 @@ function generateMessage(msg,player)
 
 	--Create the name
 	local nameLabel=Instance.new'TextLabel'
+		nameLabel.Text=" "..player.Name..": " -- To make things easier when adding nicknames.
 	
 	--Ths following "if" statement will detect if the player is using nicknames. Long "if" statement warning.
 	if player:findFirstChild'.nickname' and player[".nickname"]:IsA'StringValue' and player[".nickname"].Value~=string.rep(" ",string.len(player[".nickname"].Value)) and string.len(player[".nickname"].Value)<21 then
+		
+		-- Just a quick way to use this mutliple times without adding more lines.
+		local function setNickname()
 			nameLabel.Text=" ~"..player[".nickname"].Value..": "
-	else
-		--If there is no nickname, just use regular name.
-		nameLabel.Text=" "..player.Name..": " wait() --For some reason it was failing without a delay.
+		end
+
+		if nicknameLocked==true then
+			if promptModeration(player)==true then
+				setNickname()
+			end
+		elseif nicknameLocked==false then
+			setNickname()
+		end
 	end
+
 		--Finish the generation for names
 		nameLabel.Size=UDim2.new(0,string.len(nameLabel.Text)*7,1,0) 
 		nameLabel.TextColor3=BrickColor.White().Color
