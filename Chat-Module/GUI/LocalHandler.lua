@@ -1,4 +1,5 @@
 -- I WARN YOU. THIS SCRIPT IS GROSS.
+repeat wait() print'Waiting for player to load' until game.Players.LocalPlayer
 local player = game.Players.LocalPlayer
 	local mouse = player:GetMouse()
 typer = script.Parent.input
@@ -20,6 +21,19 @@ function animate()
 		script.Parent.char.TextTransparency=i
 	end
 end
+
+-- "name" is not a valid member of frame. the shit?
+function detectMention(message)	
+	repeat wait() until message:findFirstChild'msg'
+	for w in string.gmatch(message.msg.Text, "%a+") do
+	    if string.len(w)>1 and string.lower(w)==string.lower(string.sub(player.Name,1,string.len(w))) then
+	    	message.BackgroundColor3=Color3.new(41/255, 128/255, 185/255)
+	    	message.Transparency=.7
+	    end
+	end
+end
+----------------------------------------------------
+
 
 --Catches the "/" keydown
 mouse.KeyUp:connect(function(key)
@@ -44,6 +58,11 @@ UID.InputBegan:connect(function(input)
 			end		
 		end
 	end
+end)
+
+script.Parent.Parent.Frame.ChildAdded:connect(function(c)
+	print(string.lower(c.name.Text).." "..string.lower(player.Name))
+	if c:IsA'Frame' and c.Name=="message" and string.lower(c.name.Text)~=string.lower(" "..player.Name..":") then detectMention(c) end
 end)
 
 --This is to track the character count of the textbox, ugly because I can't find a proper event.
