@@ -26,8 +26,6 @@
 	This is done locally and will run even if you said you name,
 	also a pretty easy fix but it is not in this script.
 
-	Not (yet) compatible with nicknames.
-
 
 	-- Admins --
 	On line 50 - 65 there is a function to identify ROBLOX admins
