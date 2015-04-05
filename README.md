@@ -10,8 +10,10 @@ This is a open-source project! Help us develop!
 I will be taking any non-malicious pull requests.
 
 # Installation
-Not going to update a model with all of this often, but this is really easy to compile yourself.
-When it's at a stable release I will most likely start using a model because it will be easier for less advanced users.
+If you want to use the chat, there is now a package on ROBLOX for it: http://www.roblox.com/ProChat-1-0-0-Panther-item?id=234218451
+
+
+If you want to use something else, you'll have to compile it yoursel with the guide below.
 
 #Compile files
 A lot of files in the repository is labeled "xml". This is because you need to compile them.
