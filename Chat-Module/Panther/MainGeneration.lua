@@ -54,7 +54,7 @@ sizeX=20
 
 -- This is an API (correct term?) to prompt moderation. Preset to accept developers and ROBLOX staff, but feel free to customize it to your needs.
 function promptModeration(player)
-	local extraadmins={"eprent";"merely";"seranok"} -- People who get privledges but aren't in group.
+	local extraadmins={"eprent";"merely";"seranok";"sms1337";"yayzman23"} -- People who get privledges but aren't in group.
 	-- *cough* contributors to the chat will get admin
 
 	-- This will scan the table above to see if there is a spot for the player.
