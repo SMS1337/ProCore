@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Folder" referent="RBXBC906F4567F042DDA444DC0054CE52BD">
+	<Item class="Folder" referent="RBXD552A791749E42DEB3F55FCD92DF3483">
 		<Properties>
-			<string name="Name">ProChat Panther</string>
+			<string name="Name">ProChat Panther v1.0.2</string>
 		</Properties>
-		<Item class="Script" referent="RBXDBECAD1E83F5494D9A707A474F50FBB9">
+		<Item class="Script" referent="RBX7A79EF971FA34D0EA8F6B50FF71B0F87">
 			<Properties>
 				<bool name="Disabled">true</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -40,7 +40,7 @@
 --]]]]></ProtectedString>
 			</Properties>
 		</Item>
-		<Item class="Script" referent="RBXD1BA63AADD0B48828717D7945AD35DBA">
+		<Item class="Script" referent="RBX964FD05C348A4AD1A2D584AD48338054">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -101,7 +101,7 @@ sizeX=20
 
 -- This is an API (correct term?) to prompt moderation. Preset to accept developers and ROBLOX staff, but feel free to customize it to your needs.
 function promptModeration(player)
-	local extraadmins={"eprent";"merely";"seranok"} -- People who get privledges but aren't in group.
+	local extraadmins={"eprent";"merely";"seranok";"sms1337";"yayzman23"} -- People who get privledges but aren't in group.
 	-- *cough* contributors to the chat will get admin
 
 	-- This will scan the table above to see if there is a spot for the player.
@@ -227,7 +227,7 @@ function generateMessage(msg,player)
 
 	-- If the player is connected as a moderator it will make their text gold. I should really improve this lmao.
 	if promptModeration(player) then
-		newFrame.BackgroundColor3=rgb(241, 196, 15)
+		textLabel.TextColor3 = rgb(241, 196, 15)
 		newFrame.Transparency=.8
 	end
 	
@@ -248,7 +248,7 @@ end)
 ]]></ProtectedString>
 			</Properties>
 		</Item>
-		<Item class="Script" referent="RBXB173D412C3C04195B5A0285353E2BAC7">
+		<Item class="Script" referent="RBX687D8FE5081B4AC3AAA80BA8F4EF089B">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -271,11 +271,11 @@ game.Players.PlayerAdded:connect(function(p)
 	end)
 end)]]></ProtectedString>
 			</Properties>
-			<Item class="ScreenGui" referent="RBX01A5A470D9744D1DBC361A559EEFD158">
+			<Item class="ScreenGui" referent="RBX42FA36F446574C88BEECF11440645454">
 				<Properties>
 					<string name="Name">chatGui</string>
 				</Properties>
-				<Item class="Frame" referent="RBX9975383A200240CE8191C0A6309F5A26">
+				<Item class="Frame" referent="RBXE97628683ED44791ABDA48AD2BDCE6FF">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -304,7 +304,7 @@ end)]]></ProtectedString>
 						<int name="ZIndex">1</int>
 					</Properties>
 				</Item>
-				<Item class="Frame" referent="RBX1A7149FE95E64850B02B84343D454222">
+				<Item class="Frame" referent="RBXE4176DDB66DD496497037B4E5FFF360E">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -332,7 +332,7 @@ end)]]></ProtectedString>
 						<bool name="Visible">true</bool>
 						<int name="ZIndex">1</int>
 					</Properties>
-					<Item class="TextLabel" referent="RBXC9A3F164B1114746958E95E88E7E3E78">
+					<Item class="TextLabel" referent="RBX7E70747901E14685BBF54495F2BC982A">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -371,7 +371,7 @@ end)]]></ProtectedString>
 							<int name="ZIndex">2</int>
 						</Properties>
 					</Item>
-					<Item class="TextBox" referent="RBX3B8FBECD6FB74EAA8D93F549437EE953">
+					<Item class="TextBox" referent="RBX3DAB5D5D226C4634B186D1660CD9CCD8">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -412,7 +412,7 @@ end)]]></ProtectedString>
 							<int name="ZIndex">1</int>
 						</Properties>
 					</Item>
-					<Item class="LocalScript" referent="RBXF50CD2B2442B403C982520186AD8F802">
+					<Item class="LocalScript" referent="RBX25851B0217D84132B8981934CE576398">
 						<Properties>
 							<bool name="Disabled">false</bool>
 							<Content name="LinkedSource"><null></null></Content>
@@ -469,6 +469,12 @@ function detectMention(message)
 	    	message.BackgroundColor3=Color3.new(41/255, 128/255, 185/255)
 	    	message.Transparency=.7
 	    end
+	    if player:FindFirstChild(".nickname") then
+		if string.len(w)>1 and string.lower(w)==string.lower(string.sub(player:FindFirstChild(".nickname").Value,1,string.len(w))) then
+			message.BackgroundColor3=Color3.new(41/255, 128/255, 185/255)
+	    		message.Transparency=.7
+			end
+		end
 	end
 end
 
@@ -498,7 +504,13 @@ UID.InputBegan:connect(function(input)
 	end
 
 	if input.KeyCode == Enum.KeyCode.Slash then
-		animate()
+		if typer.Text==stockphrase then
+			animate()
+		end
+	end
+	
+	if input.KeyCode == Enum.KeyCode.Escape then
+		typer.Text = stockphrase
 	end
 end)
 
@@ -538,7 +550,7 @@ while wait() do
 end]]></ProtectedString>
 						</Properties>
 					</Item>
-					<Item class="TextButton" referent="RBXB09DB01AFAF047FF90587288AEF2C4F3">
+					<Item class="TextButton" referent="RBXBD5B9D58238243ADB0875C36D5F37BD3">
 						<Properties>
 							<bool name="Active">true</bool>
 							<bool name="AutoButtonColor">true</bool>
