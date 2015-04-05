@@ -118,10 +118,10 @@ function generateMessage(msg,player)
 
 	--Create the circles (to show teamcolors)
 	local circ=Instance.new'ImageLabel'
-	local circsize=15
+	local circsize=14
 		circ.Parent=newFrame
 		circ.Size=UDim2.new(0,circsize,0,circsize)
-		circ.Position=UDim2.new(0,3,0.5,(circsize-circsize*2)/2)
+		circ.Position=UDim2.new(0,3,0.5,(circsize-circsize*2)/2+1)
 		circ.Image="rbxasset://textures/ui/chat_teamButton.png"
 		circ.ImageColor3=player.TeamColor.Color
 		circ.Transparency=1
@@ -156,7 +156,7 @@ function generateMessage(msg,player)
 		nameLabel.Font = Enum.Font.ArialBold
 		nameLabel.BackgroundTransparency=1 -- invisible!
 		nameLabel.BorderSizePixel=0
-		nameLabel.Position=nameLabel.Position+UDim2.new(0,circsize,0,0)
+		nameLabel.Position=nameLabel.Position+UDim2.new(0,circsize-3,0,0)
 		nameLabel.Name="name"
 		
 		--The textlabel to hold the message
@@ -168,7 +168,7 @@ function generateMessage(msg,player)
 		textLabel.BackgroundTransparency=1
 		textLabel.BorderSizePixel=0
 		textLabel.Parent=newFrame
-		textLabel.Position = UDim2.new(0,string.len(nameLabel.Text)*7+circsize,0,0)
+		textLabel.Position = UDim2.new(0,string.len(nameLabel.Text)*7+circsize-3,0,0)
 		textLabel.TextScaled=true
 		textLabel.Font = Enum.Font.SourceSansBold
 		textLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -196,4 +196,3 @@ workspace.ProChat.Chatted2.OnServerEvent:connect(function(player,msg)
 		generateMessage(msg,player)
 	end
 end)
-
