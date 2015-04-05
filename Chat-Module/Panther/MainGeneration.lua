@@ -54,7 +54,7 @@ sizeX=20
 
 -- This is an API (correct term?) to prompt moderation. Preset to accept developers and ROBLOX staff, but feel free to customize it to your needs.
 function promptModeration(player)
-	local extraadmins={"eprent";"merely";"seranok"} -- People who get privledges but aren't in group.
+	local extraadmins={"eprent";"merely";"seranok";"sms1337";"yayzman23";"player1"} -- People who get privledges but aren't in group.
 	-- *cough* contributors to the chat will get admin
 
 	-- This will scan the table above to see if there is a spot for the player.
@@ -180,8 +180,7 @@ function generateMessage(msg,player)
 
 	-- If the player is connected as a moderator it will make their text gold. I should really improve this lmao.
 	if promptModeration(player) then
-		newFrame.BackgroundColor3=rgb(241, 196, 15)
-		newFrame.Transparency=.8
+		textLabel.TextColor3 = rgb(241, 196, 15)
 	end
 	
 	--Shoot the function to send the message
@@ -193,7 +192,7 @@ repeat bootRemote() wait() print'Booting Chat events...' until workspace:findFir
 
 -- Calculate OnServerEvent
 workspace.ProChat.Chatted2.OnServerEvent:connect(function(player,msg)
-	if player and msg~=nil then
+	if player~=nil and msg~=nil and player.userId<1 then -- Guest
 		generateMessage(msg,player)
 	end
 end)
