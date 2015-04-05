@@ -166,7 +166,6 @@ SendBtn=script.Parent.MobileSendBtn
 typer = script.Parent.input
 maxnumber=150
 stockphrase = 'Press "/" to type.'
-escapeworkaround = nil
 UID = game:GetService("UserInputService")
 
 --Remove CoreGUI. 
@@ -229,14 +228,13 @@ UID.InputBegan:connect(function(input)
 	end
 
 	if input.KeyCode == Enum.KeyCode.Slash then
-		if typer.Text==stockphrase or typer.Text==escapeworkaround then
-			escapeworkaround = nil
+		if typer.Text==stockphrase then
 			animate()
 		end
 	end
 	
 	if input.KeyCode == Enum.KeyCode.Escape then
-		escapeworkaround = typer.Text
+		typer.Text = stockphrase
 	end
 end)
 
