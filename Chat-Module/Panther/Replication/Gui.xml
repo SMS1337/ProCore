@@ -199,6 +199,12 @@ function detectMention(message)
 	    	message.BackgroundColor3=Color3.new(41/255, 128/255, 185/255)
 	    	message.Transparency=.7
 	    end
+	    if player:FindFirstChild(".nickname") then
+		if string.len(w)>1 and string.lower(w)==string.lower(string.sub(player:FindFirstChild(".nickname").Value,1,string.len(w))) then
+			message.BackgroundColor3=Color3.new(41/255, 128/255, 185/255)
+	    		message.Transparency=.7
+			end
+		end
 	end
 end
 
