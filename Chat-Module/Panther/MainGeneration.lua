@@ -180,7 +180,7 @@ function generateMessage(msg,player)
 
 	-- If the player is connected as a moderator it will make their text gold. I should really improve this lmao.
 	if promptModeration(player) then
-		newFrame.BackgroundColor3=rgb(241, 196, 15)
+		textLabel.TextColor3 = rgb(241, 196, 15)
 		newFrame.Transparency=.8
 	end
 	
