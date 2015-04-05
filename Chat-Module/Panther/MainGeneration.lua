@@ -122,7 +122,7 @@ function generateMessage(msg,player)
 		circ.Parent=newFrame
 		circ.Size=UDim2.new(0,circsize,0,circsize)
 		circ.Position=UDim2.new(0,3,0.5,(circsize-circsize*2)/2)
-		circ.Image="http://www.roblox.com/asset/?id="..203147548
+		circ.Image="rbxasset://textures/ui/chat_teamButton.png"
 		circ.ImageColor3=player.TeamColor.Color
 		circ.Transparency=1
 
