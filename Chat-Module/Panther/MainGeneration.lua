@@ -26,6 +26,8 @@
 	This is done locally and will run even if you said you name,
 	also a pretty easy fix but it is not in this script.
 
+	Not (yet) compatible with nicknames.
+
 
 	-- Admins --
 	On line 50 - 65 there is a function to identify ROBLOX admins
@@ -190,7 +192,7 @@ repeat bootRemote() wait() print'Booting Chat events...' until workspace:findFir
 
 -- Calculate OnServerEvent
 workspace.ProChat.Chatted2.OnServerEvent:connect(function(player,msg)
-	if player and msg~=nil then
+	if player~=nil and msg~=nil and player.userId > 0 then -- Guest
 		generateMessage(msg,player)
 	end
 end)
