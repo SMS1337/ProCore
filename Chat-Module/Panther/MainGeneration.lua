@@ -94,6 +94,7 @@ function deliver(instanc)
 			for _,b in pairs(a.PlayerGui.chatGui.Frame:GetChildren()) do
 				if b:IsA'Frame' and b.Name=='message' then
 					b:TweenPosition(UDim2.new(0,0,1,b.Position.Y.Offset-sizeX),"Out","Linear",.05,true)
+					b.Position = UDim2.new(0,0,1,b.Position.Y.Offset-sizeX)--forces position to be correct incase tween is interrupted
 					if b.Position.Y.Offset < triggerdel then -- Most likely going to scale this in the future. 
 						b:Destroy()
 					end
@@ -103,6 +104,7 @@ function deliver(instanc)
 			newMsg.Parent=a.PlayerGui.chatGui.Frame
 				newMsg.Position=UDim2.new(-1,0,1,sizeX-sizeX*2)--To make sure it animates correctly
 				newMsg:TweenPosition(UDim2.new(0,0,1,sizeX-sizeX*2),"Out","Linear",.05,true)
+				newMsg.Position = UDim2.new(0,0,1,sizeX-sizeX*2)
 		end
 	end
 end
