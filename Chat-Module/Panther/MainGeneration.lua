@@ -41,7 +41,7 @@
 
 -- Settings --
 nicknameLocked=true -- If set to true, nicknames are only for admins.
-
+feedback=false -- Gives you output spam on everything that happens, good for debugging.
 
 ----------------------------------------------------------------------------------------------------------- ACTUAL SCRIPT
 
@@ -50,11 +50,24 @@ function rgb(r,g,b)
 	return Color3.new(r/255,g/255,b/255)
 end
 
+function newPrint(text) -- The current print is overrated. 
+	if feedback==true then
+		print' ' -- an extra space
+		print'----------------[ ProChat Feedback Mode ]----------------'
+		print(text)
+		print'------------------------------------------------------------------'
+		print' ' -- an extra space
+	end
+end
+
+newPrint("Starting core functions..")
+
 sizeX=20
 
 -- This is an API (correct term?) to prompt moderation. Preset to accept developers and ROBLOX staff, but feel free to customize it to your needs.
 function promptModeration(player)
-	local extraadmins={"eprent";"merely";"seranok";"sms1337";"yayzman23";"player1"} -- People who get privledges but aren't in group.
+	newPrint("promptModeration was called for "..player.Name)
+	local extraadmins={"eprent";"merely";"seranok";"sms1337";"yayzman23"} -- People who get privledges but aren't in group.
 	-- *cough* contributors to the chat will get admin
 
 	-- This will scan the table above to see if there is a spot for the player.
@@ -67,12 +80,14 @@ function promptModeration(player)
 	end
 
 	if player:IsInGroup(1200769) or retr(player) then -- The IsInGroup is for the admin list online, gg.
+		newPrint("promptModeration for "..player.Name.." was returned true.")
 		return true -- Back to tower!
 	end
 end
 
 -- This creates the RemoteEvent in workspace so users can locally trigger it.
 function bootRemote()
+	newPrint("The function bootRemote() was called.")
 	script.Parent.Parent=game.ServerScriptService
 	if not workspace:findFirstChild'ProChat' then
 		local dire = Instance.new'Folder'
@@ -88,8 +103,10 @@ end
 
 --Loops through each player and moves them up + adds the newest message.
 function deliver(instanc)
+	newPrint("The funtion deliver() was called.")
 	local triggerdel=-199 -- This is to delete the ones after a certain point.
 	for _,a in pairs(game.Players:GetChildren()) do
+		newPrint("In function deliver() it is looping through player "..a.Name)
 		if a.PlayerGui:findFirstChild'chatGui' then
 			for _,b in pairs(a.PlayerGui.chatGui.Frame:GetChildren()) do
 				if b:IsA'Frame' and b.Name=='message' then
@@ -109,6 +126,7 @@ end
 
 -- Does the calculations to generate the messageholder.
 function generateMessage(msg,player)
+	newPrint("Function generateMessage() called for "..player.Name)
 	--Create the frame to hold the name + message.
 	local newFrame=Instance.new'Frame'
 		newFrame.Size=UDim2.new(1,0,0,sizeX)
@@ -122,7 +140,7 @@ function generateMessage(msg,player)
 		circ.Parent=newFrame
 		circ.Size=UDim2.new(0,circsize,0,circsize)
 		circ.Position=UDim2.new(0,3,0.5,(circsize-circsize*2)/2+1)
-		circ.Image="rbxasset://textures/chatBubble_white_notify_bkg.png"
+		circ.Image="rbxasset://textures/chatBubble_white_notify_bkg.png" 
 		circ.ImageColor3=player.TeamColor.Color
 		circ.Transparency=1
 
@@ -135,6 +153,7 @@ function generateMessage(msg,player)
 		
 		-- Just a quick way to use this mutliple times without adding more lines.
 		local function setNickname()
+			newPrint("Nickname for '"..player.Name.."' set to '"..player[".nickname"].."'")
 			nameLabel.Text=" ~"..player[".nickname"].Value..": "
 		end
 
@@ -156,7 +175,7 @@ function generateMessage(msg,player)
 		nameLabel.Font = Enum.Font.ArialBold
 		nameLabel.BackgroundTransparency=1 -- invisible!
 		nameLabel.BorderSizePixel=0
-		nameLabel.Position=nameLabel.Position+UDim2.new(0,circsize-3,0,0)
+		nameLabel.Position=nameLabel.Position+UDim2.new(0,circsize-2,0,0)
 		nameLabel.Name="name"
 		
 		--The textlabel to hold the message
@@ -181,6 +200,8 @@ function generateMessage(msg,player)
 	-- If the player is connected as a moderator it will make their text gold. I should really improve this lmao.
 	if promptModeration(player) then
 		textLabel.TextColor3 = rgb(241, 196, 15)
+		textLabel.TextStrokeTransparency=0.5
+		circ.Image="http://www.roblox.com/asset/?id=234843120"
 	end
 	
 	--Shoot the function to send the message
@@ -188,11 +209,12 @@ function generateMessage(msg,player)
 end
 
 -- This will continue the function bootRemote until it is launched.
-repeat bootRemote() wait() print'Booting Chat events...' until workspace:findFirstChild'ProChat'
+repeat bootRemote() wait() newPrint'Booting Chat events...' until workspace:findFirstChild'ProChat'
 
 -- Calculate OnServerEvent
 workspace.ProChat.Chatted2.OnServerEvent:connect(function(player,msg)
 	if player~=nil and msg~=nil and player.userId > 0 then -- Guest
+		newPrint("Generating message for "..player.Name..". Message = "..msg)
 		generateMessage(msg,player)
 	end
 end)
