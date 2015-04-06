@@ -41,8 +41,8 @@
 
 -- Settings --
 nicknameLocked=true -- If set to true, nicknames are only for admins.
-feedback=false -- Gives you output spam on everything that happens, good for debugging.
-
+feedback=true -- Gives you output spam on everything that happens, good for debugging.
+deletemessageafter = -199
 ----------------------------------------------------------------------------------------------------------- ACTUAL SCRIPT
 
 --To fix my ugly color3 statements
@@ -59,6 +59,12 @@ function newPrint(text) -- The current print is overrated.
 		print' ' -- an extra space
 	end
 end
+
+classes = require(script:WaitForChild("ClassGetter"))
+
+newPrint("Objects intialize, loaded "..classes["NumberOfClasses"].." objects")
+
+chatmain = classes["ChatMain"](classes, deletemessageafter)
 
 newPrint("Starting core functions..")
 
@@ -98,31 +104,6 @@ function bootRemote()
 			reTrigger.Name="Chatted2"
 	else
 		return true
-	end
-end
-
---Loops through each player and moves them up + adds the newest message.
-function deliver(instanc)
-	newPrint("The funtion deliver() was called.")
-	local triggerdel=-199 -- This is to delete the ones after a certain point.
-	for _,a in pairs(game.Players:GetChildren()) do
-		newPrint("In function deliver() it is looping through player "..a.Name)
-		if a.PlayerGui:findFirstChild'chatGui' then
-			for _,b in pairs(a.PlayerGui.chatGui.Frame:GetChildren()) do
-				if b:IsA'Frame' and b.Name=='message' then
-					b:TweenPosition(UDim2.new(0,0,1,b.Position.Y.Offset-sizeX),"Out","Linear",.05,true)
-					b.Position = UDim2.new(0,0,1,b.Position.Y.Offset-sizeX)--forces position to be correct incase tween is interrupted
-					if b.Position.Y.Offset < triggerdel then -- Most likely going to scale this in the future. 
-						b:Destroy()
-					end
-				end
-			end
-			local newMsg=instanc:Clone()
-			newMsg.Parent=a.PlayerGui.chatGui.Frame
-				newMsg.Position=UDim2.new(-1,0,1,sizeX-sizeX*2)--To make sure it animates correctly
-				newMsg:TweenPosition(UDim2.new(0,0,1,sizeX-sizeX*2),"Out","Linear",.05,true)
-				newMsg.Position = UDim2.new(0,0,1,sizeX-sizeX*2)
-		end
 	end
 end
 
@@ -207,7 +188,7 @@ function generateMessage(msg,player)
 	end
 	
 	--Shoot the function to send the message
-	deliver(newFrame)
+	chatmain:AddMessage(newFrame)
 end
 
 -- This will continue the function bootRemote until it is launched.
