@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Folder" referent="RBX7490E5C957AE48568AE1781DBA5CA946">
+	<Item class="Folder" referent="RBXD8B4AF745E2D48DDA45631B3B9BC8881">
 		<Properties>
 			<string name="Name">ProChat</string>
 		</Properties>
-		<Item class="Script" referent="RBXC538B2E789474200950A558C23E259A4">
+		<Item class="Script" referent="RBX1730F3AB43534917B0458AE71D3BC871">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -53,7 +53,7 @@
 
 -- Settings --
 nicknameLocked=true -- If set to true, nicknames are only for admins.
-feedback=true -- Gives you output spam on everything that happens, good for debugging.
+feedback=false -- Gives you output spam on everything that happens, good for debugging.
 deletemessageafter = -199
 ----------------------------------------------------------------------------------------------------------- ACTUAL SCRIPT
 
@@ -114,6 +114,9 @@ function bootRemote()
 		local reTrigger = Instance.new'RemoteEvent'
 			reTrigger.Parent=dire
 			reTrigger.Name="Chatted2"
+		local spawnTrigger = Instance.new('RemoteEvent')
+			spawnTrigger.Parent=dire
+			spawnTrigger.Name = "OnGuiSpawn"
 	else
 		return true
 	end
@@ -213,9 +216,11 @@ workspace.ProChat.Chatted2.OnServerEvent:connect(function(player,msg)
 		generateMessage(msg,player)
 	end
 end)
-]]></ProtectedString>
+workspace.ProChat.OnGuiSpawn.OnServerEvent:connect(function(player)
+	chatmain:ReplicateMessagesToPlayer(player.Name)
+end)]]></ProtectedString>
 			</Properties>
-			<Item class="ModuleScript" referent="RBX46F8EA473DB64899BC0CCBA8BD61873D">
+			<Item class="ModuleScript" referent="RBX3FF342D34DB449D990DD985B657012C0">
 				<Properties>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">ClassGetter</string>
@@ -284,7 +289,7 @@ getclasses(children)
 return ClassGetter
 ]]></ProtectedString>
 				</Properties>
-				<Item class="ModuleScript" referent="RBX78DDF3B75D414E419DD8EC7D0CA14D60">
+				<Item class="ModuleScript" referent="RBX9F86F176BC474F9592541EE8214DD769">
 					<Properties>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">ChatMain</string>
@@ -324,11 +329,17 @@ Class.AddMessage = function(self, messageframe)
 	print(#self.MessageFrames)
 end
 
+Class.ReplicateMessagesToPlayer = function(self, playername)
+	for i=1, #self.MessageFrames do
+		self.MessageFrames[i]:ReplicateBackToPlayer(playername)
+	end
+end
+
 return Class
 ]]></ProtectedString>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBX9E8DC01CF1134757B85BB8179AFB8DEC">
+				<Item class="ModuleScript" referent="RBXF800E69618DE4F42A5D4F8AF8D40A66F">
 					<Properties>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">Message</string>
@@ -345,6 +356,7 @@ Class.new = function(classes, frame, deleteafter)
 	local self = setmetatable({}, Class)
 	self.classes = classes
 	self.DistanceFromNewest = 0
+	self.OriginalFrame = frame
 	self.DeleteAfter = deleteafter
 	self.PlayerReplications = {}
 	local sizeX = 20
@@ -369,10 +381,40 @@ end
 Class.UpdatePos = function(self)
 	local sizeX = 20
 	for k,v in pairs(self.PlayerReplications) do
-		v:TweenPosition(UDim2.new(0,0,1,(sizeX-sizeX*2)-(sizeX*self.DistanceFromNewest)),"Out","Linear",0.05,true)
-		if v.Position.Y.Offset < self.DeleteAfter then
+		if v ~= nil and v.Parent ~= nil then
+			v:TweenPosition(UDim2.new(0,0,1,(sizeX-sizeX*2)-(sizeX*self.DistanceFromNewest)),"Out","Linear",0.05,true)
+			if v.Position.Y.Offset < self.DeleteAfter then
+				v:Destroy()
+				self.PlayerReplications[k] = nil
+			end
+		else
 			v:Destroy()
 			self.PlayerReplications[k] = nil
+		end
+	end
+end
+
+Class.RemoveFromPlayer = function(self, playername)
+	if self.PlayerReplications[playername] ~= nil then
+		self.PlayerReplications[playername]:Destroy()
+		self.PlayerReplications[playername] = nil
+	end
+end
+
+Class.ReplicateBackToPlayer = function(self, playername)
+	local sizeX = 20
+	self:RemoveFromPlayer(playername)
+	if game.Players:FindFirstChild(playername) then
+		if game.Players:FindFirstChild(playername):FindFirstChild("PlayerGui") then
+			if game.Players:FindFirstChild(playername):FindFirstChild("PlayerGui"):FindFirstChild("chatGui") then
+				if game.Players:FindFirstChild(playername):FindFirstChild("PlayerGui"):FindFirstChild("chatGui"):FindFirstChild("Frame") then
+					local msg = self.OriginalFrame:Clone()
+					msg.Parent = game.Players:FindFirstChild(playername):FindFirstChild("PlayerGui"):FindFirstChild("chatGui"):FindFirstChild("Frame")
+					msg.Position=UDim2.new(-1,0,1,sizeX-sizeX*2)
+					self.PlayerReplications[playername] = msg
+					self:UpdatePos()
+				end
+			end
 		end
 	end
 end
@@ -391,7 +433,7 @@ return Class
 				</Item>
 			</Item>
 		</Item>
-		<Item class="Script" referent="RBX09583A519C804E5B8CBCE29D0E4A45CD">
+		<Item class="Script" referent="RBXB0398396D53A4B0281AA536F12DBB522">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -415,11 +457,11 @@ game.Players.PlayerAdded:connect(function(p)
 end)
 ]]></ProtectedString>
 			</Properties>
-			<Item class="ScreenGui" referent="RBXFFF180CA91FF4A2FA30D9DA7967AEDE4">
+			<Item class="ScreenGui" referent="RBXBE6DF8B853EC413E9E311944306BA01A">
 				<Properties>
 					<string name="Name">chatGui</string>
 				</Properties>
-				<Item class="Frame" referent="RBX2EBA554BCAB040BCB0B829715C09905D">
+				<Item class="Frame" referent="RBXFE0FFA44D8F141B585C0D9C6BCD7515F">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -448,7 +490,7 @@ end)
 						<int name="ZIndex">1</int>
 					</Properties>
 				</Item>
-				<Item class="Frame" referent="RBXF38AB36BEBFE440095980CC8061A80B1">
+				<Item class="Frame" referent="RBXF64AFD5A5E7F465C993C4B53197E0B8A">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -476,7 +518,7 @@ end)
 						<bool name="Visible">true</bool>
 						<int name="ZIndex">1</int>
 					</Properties>
-					<Item class="TextLabel" referent="RBX4A3C56B80B744B099318F6735523A643">
+					<Item class="TextLabel" referent="RBXA0EAF729959A48CD913EAA1E6CB132DC">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -515,7 +557,7 @@ end)
 							<int name="ZIndex">2</int>
 						</Properties>
 					</Item>
-					<Item class="TextBox" referent="RBX76CFA43FE3884426B66B971E96E00846">
+					<Item class="TextBox" referent="RBX65864039A5A84A56A50015FE401A6756">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -556,7 +598,7 @@ end)
 							<int name="ZIndex">1</int>
 						</Properties>
 					</Item>
-					<Item class="LocalScript" referent="RBX931B22DFB0ED4934988F5F58B2988E05">
+					<Item class="LocalScript" referent="RBXC7162AAB479D4C1CABFA00C106A38D9D">
 						<Properties>
 							<bool name="Disabled">false</bool>
 							<Content name="LinkedSource"><null></null></Content>
@@ -645,6 +687,7 @@ end
 UID.InputBegan:connect(function(input)
 	if input.KeyCode == Enum.KeyCode.Return then
 		send()
+		typer.Text = stockphrase
 	end
 
 	if input.KeyCode == Enum.KeyCode.Slash then
@@ -672,6 +715,7 @@ end)
 
 --This is to track the character count of the textbox, ugly because I can't find a proper event.
 -- if someone finds a better way to do it, pls do a pull request. 
+workspace.ProChat.OnGuiSpawn:FireServer()
 while wait() do
 	local number = string.len(script.Parent.input.Text)
 	--Fill the label
@@ -694,7 +738,7 @@ while wait() do
 end]]></ProtectedString>
 						</Properties>
 					</Item>
-					<Item class="TextButton" referent="RBX3FF444EA51A442279F8F006073B95C68">
+					<Item class="TextButton" referent="RBXB3626A9A9F47488D9B6D15EC1D531A1D">
 						<Properties>
 							<bool name="Active">true</bool>
 							<bool name="AutoButtonColor">true</bool>
@@ -739,6 +783,44 @@ end]]></ProtectedString>
 					</Item>
 				</Item>
 			</Item>
+		</Item>
+		<Item class="Script" referent="RBX0FBD0EB553F24AC78DB8DA9A1AC1FECE">
+			<Properties>
+				<bool name="Disabled">false</bool>
+				<Content name="LinkedSource"><null></null></Content>
+				<string name="Name">Introduction</string>
+				<ProtectedString name="Source"><![CDATA[--[[
+	This is a folder of neccesary files to get ProChat working in your server.
+	Don't modify it.
+	
+	View the GitHub here:
+	https://github.com/eprent/ProCore/
+	This has (if needed) weekly updates, GitHub updates are bleeding edge.
+	If you have an issue, report it on GitHub please.
+	
+	-----------------------------------------------------------------
+	|																|
+	|					/!\ LICENSE AND AGREEMENT					|
+	|		-Only re-release this if you have made changes. 		|
+	|		-By editing scripts we won't help fix your issues.		|
+	|																|
+	|																|
+	|					  This is FREE software.					|
+	|			 If you paid for it, get your money back.			|
+	|				  And report the seller to ROBLOX.				|
+	|																|
+	-----------------------------------------------------------------
+	
+	v1.0.0
+	THIS SCRIPT DOES NOT AUTOUPDATE. IF YOU WANT IT TO AUTO UPDATE, USE INSERTSERVICE TO AUTOMATICALLY ADD IT.
+	--
+	Contributors: 
+		-eprent
+		-SMS1337
+		-YAYZMAN23
+--]]
+]]></ProtectedString>
+			</Properties>
 		</Item>
 	</Item>
 </roblox>
