@@ -117,15 +117,15 @@ function generateMessage(msg,player)
 		newFrame.Position=UDim2.new(0,0,.9,-sizeX)
 		newFrame.Name="message" -- We'll use this 
 
-	--Create the circles (to show teamcolors)
-	local circ=Instance.new'ImageLabel'
-	local circsize=14
-		circ.Parent=newFrame
-		circ.Size=UDim2.new(0,circsize,0,circsize)
-		circ.Position=UDim2.new(0,3,0.5,(circsize-circsize*2)/2+1)
-		circ.Image="rbxasset://textures/chatBubble_white_notify_bkg.png" 
-		circ.ImageColor3=player.TeamColor.Color
-		circ.Transparency=1
+	--Create the speech bubble things (to show teamcolors)
+	local bbl=Instance.new'ImageLabel'
+	local bblsize=14
+		bbl.Parent=newFrame
+		bbl.Size=UDim2.new(0,bblsize,0,bblsize)
+		bbl.Position=UDim2.new(0,3,0.5,(bblsize-bblsize*2)/2+1)
+		bbl.Image="rbxasset://textures/chatBubble_white_notify_bkg.png" 
+		bbl.ImageColor3=player.TeamColor.Color
+		bbl.Transparency=1
 
 	--Create the name
 	local nameLabel=Instance.new'TextLabel'
