@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScreenGui" referent="RBX382B5530689840E1B2D2BFF0EF42EBB1">
+	<Item class="ScreenGui" referent="RBX2DD6BB094C284718BA748FDCD079A1F5">
 		<Properties>
 			<string name="Name">chatGui</string>
 		</Properties>
-		<Item class="Frame" referent="RBXEEBA15F73BC64CCFADAD21846C107866">
+		<Item class="Frame" referent="RBXD96AEF2113C84986899CE564A247E226">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -34,7 +34,7 @@
 				<int name="ZIndex">1</int>
 			</Properties>
 		</Item>
-		<Item class="Frame" referent="RBX92AE6C312CDB4CCFBD4AB69E6C017ECA">
+		<Item class="Frame" referent="RBX527AF70EF4A04643A21B1D5355EE4F08">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -62,7 +62,7 @@
 				<bool name="Visible">true</bool>
 				<int name="ZIndex">1</int>
 			</Properties>
-			<Item class="TextLabel" referent="RBX9520C7FE1D29409B8E0CA391C7AA20D0">
+			<Item class="TextLabel" referent="RBX3F710060A6704828A89A9641D1F655F1">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -101,7 +101,7 @@
 					<int name="ZIndex">2</int>
 				</Properties>
 			</Item>
-			<Item class="TextBox" referent="RBXE78CA601E4B44282A42DB22D5A4FF1F0">
+			<Item class="TextBox" referent="RBX23EC62572591418BB6C9C2A3BEE0921A">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -142,7 +142,7 @@
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="LocalScript" referent="RBX73F4DE1C0DE941BAAC9E891F50F74F30">
+			<Item class="LocalScript" referent="RBX0A42CE9C4EE34447A9B98B76F8A5CA63">
 				<Properties>
 					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
@@ -231,6 +231,7 @@ end
 UID.InputBegan:connect(function(input)
 	if input.KeyCode == Enum.KeyCode.Return then
 		send()
+		typer.Text = stockphrase
 	end
 
 	if input.KeyCode == Enum.KeyCode.Slash then
@@ -258,6 +259,7 @@ end)
 
 --This is to track the character count of the textbox, ugly because I can't find a proper event.
 -- if someone finds a better way to do it, pls do a pull request. 
+workspace.ProChat.OnGuiSpawn:FireServer()
 while wait() do
 	local number = string.len(script.Parent.input.Text)
 	--Fill the label
@@ -280,7 +282,7 @@ while wait() do
 end]]></ProtectedString>
 				</Properties>
 			</Item>
-			<Item class="TextButton" referent="RBXFC98F7BEA0A14800B781F46E6C78D40E">
+			<Item class="TextButton" referent="RBX8E42AF75F58A4E989B97F4ABB4249CB9">
 				<Properties>
 					<bool name="Active">true</bool>
 					<bool name="AutoButtonColor">true</bool>

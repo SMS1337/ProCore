@@ -1,4 +1,3 @@
---this is a module, parented to ClassGetter
 local Class = {}
 Class.__index = Class
 
@@ -33,6 +32,12 @@ Class.AddMessage = function(self, messageframe)
 		end
 	end
 	print(#self.MessageFrames)
+end
+
+Class.ReplicateMessagesToPlayer = function(self, playername)
+	for i=1, #self.MessageFrames do
+		self.MessageFrames[i]:ReplicateBackToPlayer(playername)
+	end
 end
 
 return Class
