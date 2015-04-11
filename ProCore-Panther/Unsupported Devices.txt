@@ -1,0 +1,10 @@
+Devices that are having issues with the ProCore package.
+
+- iPhone 4s
+- iPhone 5
+- iPhone 5S
+- iPhone 6
+- iPhone 6+
+
+If you're having an issue with a device that's not listed here, please post here the device and who it's not working: 
+https://github.com/eprent/ProCore/issues/10
