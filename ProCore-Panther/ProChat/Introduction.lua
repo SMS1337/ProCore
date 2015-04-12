@@ -20,8 +20,6 @@
 	|																|
 	-----------------------------------------------------------------
 	
-	v1.0.0
-	THIS SCRIPT DOES NOT AUTOUPDATE. IF YOU WANT IT TO AUTO UPDATE, USE INSERTSERVICE TO AUTOMATICALLY ADD IT.
 	--
 	Contributors: 
 		-eprent
