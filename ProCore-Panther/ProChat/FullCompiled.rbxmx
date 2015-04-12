@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Folder" referent="RBX738DBA22AE0D4195B1F4917665A28467">
+	<Item class="Folder" referent="RBX337F4BBFD52243FB91444E23D917FB82">
 		<Properties>
 			<string name="Name">ProChat v1 Panther</string>
 		</Properties>
-		<Item class="Script" referent="RBXFE61F71CD15B44189B12724DFAA26E9D">
+		<Item class="Script" referent="RBX7A11745C0896453E978A8000787E5B4D">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -227,17 +227,17 @@ repeat bootRemote() wait() newPrint'Booting Chat events...' until workspace:find
 
 -- Calculate OnServerEvent
 workspace.ProChat.Chatted2.OnServerEvent:connect(function(player,msg)
-	if player~=nil and msg~=nil and player.userId > 0 then -- Guest
+	--if player~=nil and msg~=nil and player.userId > 0 then -- Guest
 		newPrint("Generating message for "..player.Name..". Message = "..msg)
 		generateMessage(msg,player)
-	end
+	--end
 end)
 workspace.ProChat.OnGuiSpawn.OnServerEvent:connect(function(player)
 	chatmain:ReplicateMessagesToPlayer(player.Name)
 end)
 ]]></ProtectedString>
 			</Properties>
-			<Item class="ModuleScript" referent="RBX985144E07F77419197F020258067ECA8">
+			<Item class="ModuleScript" referent="RBXBB28BCB7E2CC4F8486287CFEBF3E10B6">
 				<Properties>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">ClassGetter</string>
@@ -308,7 +308,7 @@ getclasses(children)
 return ClassGetter
 ]]></ProtectedString>
 				</Properties>
-				<Item class="ModuleScript" referent="RBXD285C52661B2434BB6718F72BCB18439">
+				<Item class="ModuleScript" referent="RBXB5958F504EBB41FB8D764526EE87BED1">
 					<Properties>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">ChatMain</string>
@@ -358,7 +358,7 @@ return Class
 ]]></ProtectedString>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBXECF5EEBF1F454AF7B6BCE34594D218BF">
+				<Item class="ModuleScript" referent="RBX3356B1965F7846B18460C7B07958449C">
 					<Properties>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">Message</string>
@@ -452,7 +452,7 @@ return Class
 				</Item>
 			</Item>
 		</Item>
-		<Item class="Script" referent="RBX06E13801069C4C68AB263E4556ED5CC3">
+		<Item class="Script" referent="RBXBD75F52B04554B398C674CB8C0EE7194">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -465,23 +465,43 @@ return Class
 script.Parent:WaitForChild("StartExec")
 
 GUI=script.chatGui
-function insert(player)
+
+function insertgui(player)
 	if not player.PlayerGui:findFirstChild(GUI.Name) then
 		GUI:Clone().Parent=player.PlayerGui
 	end
 end
 
-game.Players.PlayerAdded:connect(function(p)
-	p.CharacterAdded:connect(function()
-		insert(p)
+local alreadyadded = {}
+
+local players = game.Players:GetChildren()
+for i=1, #players do
+	table.insert(alreadyadded, players[i])
+	players[i].CharacterAdded:connect(function()
+		insertgui(players[i])
 	end)
+	insertgui(players[i])
+end
+
+game.Players.PlayerAdded:connect(function(p)
+	local added = false
+	for i=1, #alreadyadded do
+		if alreadyadded[i] == p then
+			added = true
+		end
+	end
+	if added == false then
+		p.CharacterAdded:connect(function()
+			insertgui(p)
+		end)
+	end
 end)]]></ProtectedString>
 			</Properties>
-			<Item class="ScreenGui" referent="RBXA19A63987C734F719C0D5DFF0B39376A">
+			<Item class="ScreenGui" referent="RBXFBA47C2740D445DCA6F602C1BE3D389F">
 				<Properties>
 					<string name="Name">chatGui</string>
 				</Properties>
-				<Item class="Frame" referent="RBXFC12F9C5C7B1412FA295232C4741BACB">
+				<Item class="Frame" referent="RBX80B389895CC6494EA1DF64BEE575A1F9">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -510,7 +530,7 @@ end)]]></ProtectedString>
 						<int name="ZIndex">1</int>
 					</Properties>
 				</Item>
-				<Item class="Frame" referent="RBX9AABAE1279614339818177A7294BB311">
+				<Item class="Frame" referent="RBX60E720810E024F6EB50179BE7E652D77">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -538,7 +558,7 @@ end)]]></ProtectedString>
 						<bool name="Visible">true</bool>
 						<int name="ZIndex">1</int>
 					</Properties>
-					<Item class="TextLabel" referent="RBXC6398E635C854136AC3A718206575F7A">
+					<Item class="TextLabel" referent="RBXDF96D78E86994ACFAD54A202DE77D7FF">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -577,7 +597,7 @@ end)]]></ProtectedString>
 							<int name="ZIndex">2</int>
 						</Properties>
 					</Item>
-					<Item class="TextBox" referent="RBXCBA9F6368FBE40039C323A3E78C65F31">
+					<Item class="TextBox" referent="RBX47DD0FE19CF54543AB605DE489786CAC">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -618,7 +638,7 @@ end)]]></ProtectedString>
 							<int name="ZIndex">1</int>
 						</Properties>
 					</Item>
-					<Item class="LocalScript" referent="RBXB6081E77A87E4DAAAFA582773C7AC861">
+					<Item class="LocalScript" referent="RBXE0D56F7AD96D4C699882D695D7954FB8">
 						<Properties>
 							<bool name="Disabled">false</bool>
 							<Content name="LinkedSource"><null></null></Content>
@@ -758,7 +778,7 @@ while wait() do
 end]]></ProtectedString>
 						</Properties>
 					</Item>
-					<Item class="TextButton" referent="RBXA797ED3616BD4B2C83D6FA3237B49428">
+					<Item class="TextButton" referent="RBX40E67DBE58FA4F4188AF9C7C642A8695">
 						<Properties>
 							<bool name="Active">true</bool>
 							<bool name="AutoButtonColor">true</bool>
@@ -804,7 +824,7 @@ end]]></ProtectedString>
 				</Item>
 			</Item>
 		</Item>
-		<Item class="Script" referent="RBX7D72A03753AC41B38218FC9A4B00DE02">
+		<Item class="Script" referent="RBX7D8CC08710B44F9EA627012FF1D53F2C">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -839,7 +859,7 @@ end]]></ProtectedString>
 --]]]]></ProtectedString>
 			</Properties>
 		</Item>
-		<Item class="Script" referent="RBX7060FC93C2E14C2BA842B3C6BA424229">
+		<Item class="Script" referent="RBX6A388795FBDA4A428EC1E3685A614FBB">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -861,13 +881,14 @@ if model:WaitForChild("Version").Value > version then
 	model.Parent = script.Parent.Parent
 	script.Parent:Destroy()
 else
+	print("did not update")
 	canrun = Instance.new("BoolValue")
 	canrun.Name = "StartExec"
 	canrun.Parent = script.Parent
 end]]></ProtectedString>
 			</Properties>
 		</Item>
-		<Item class="ModuleScript" referent="RBX44ED6518AC24471F9140F1A68BC35877">
+		<Item class="ModuleScript" referent="RBX7B1CB6FC67F8420BB2FF220A91983740">
 			<Properties>
 				<Content name="LinkedSource"><null></null></Content>
 				<string name="Name">Settings</string>
@@ -879,10 +900,10 @@ return settings
 ]]></ProtectedString>
 			</Properties>
 		</Item>
-		<Item class="IntValue" referent="RBX46E90E3DA9B340C0A0C0A287DA7E00FA">
+		<Item class="IntValue" referent="RBX86F09CFBC1B4479B97FD7BECF2BEFBCD">
 			<Properties>
 				<string name="Name">Version</string>
-				<int name="Value">1</int>
+				<int name="Value">2</int>
 			</Properties>
 		</Item>
 	</Item>

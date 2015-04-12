@@ -15,6 +15,7 @@ if model:WaitForChild("Version").Value > version then
 	model.Parent = script.Parent.Parent
 	script.Parent:Destroy()
 else
+	print("did not update")
 	canrun = Instance.new("BoolValue")
 	canrun.Name = "StartExec"
 	canrun.Parent = script.Parent
