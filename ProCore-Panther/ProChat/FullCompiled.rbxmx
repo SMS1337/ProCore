@@ -3,7 +3,7 @@
 	<External>nil</External>
 	<Item class="Folder" referent="RBXA18DFC3D8BDF44479433EAC06A7E0141">
 		<Properties>
-			<string name="Name">ProChat</string>
+			<string name="Name">ProChat v1 Panther</string>
 		</Properties>
 		<Item class="Script" referent="RBXAFB86943051C4372A0D563107C4CA4E6">
 			<Properties>
@@ -831,8 +831,6 @@ end]]></ProtectedString>
 	|																|
 	-----------------------------------------------------------------
 	
-	v1.0.0
-	THIS SCRIPT DOES NOT AUTOUPDATE. IF YOU WANT IT TO AUTO UPDATE, USE INSERTSERVICE TO AUTOMATICALLY ADD IT.
 	--
 	Contributors: 
 		-eprent
