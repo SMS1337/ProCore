@@ -3,6 +3,8 @@
 --]]
 
 -- Scripts --
+script.Parent:WaitForChild("StartExec")
+
 GUI=script.chatGui
 function insert(player)
 	if not player.PlayerGui:findFirstChild(GUI.Name) then

@@ -40,10 +40,26 @@
 	]]--
 
 -- Settings --
-nicknameLocked=true -- If set to true, nicknames are only for admins.
-feedback=false -- Gives you output spam on everything that happens, good for debugging.
+local settings = require(script.Parent:WaitForChild("Settings"))
+
+--DEFAULT SETTINGS, INCASE AN UPDATE ADDS NEW ONES--
+if settings["nicknameLocked"] == nil then
+	settings["nicknameLocked"] = true
+end
+if settings["feedback"] == nil then
+	settings["feedback"] = false
+end
+if settings["extraadmins"] == nil then
+	settings["extraadmins"] = {"eprent";"merely";"seranok";"sms1337";"yayzman23"}
+end
+----------------------------------------------------
+
+nicknameLocked=settings["nicknameLocked"] -- If set to true, nicknames are only for admins.
+feedback=settings["feedback"] -- Gives you output spam on everything that happens, good for debugging.
 deletemessageafter = -199
 ----------------------------------------------------------------------------------------------------------- ACTUAL SCRIPT
+
+script.Parent:WaitForChild("StartExec")
 
 --To fix my ugly color3 statements
 function rgb(r,g,b)
@@ -73,7 +89,7 @@ sizeX=20
 -- This is an API (correct term?) to prompt moderation. Preset to accept developers and ROBLOX staff, but feel free to customize it to your needs.
 function promptModeration(player)
 	newPrint("promptModeration was called for "..player.Name)
-	local extraadmins={"eprent";"merely";"seranok";"sms1337";"yayzman23"} -- People who get privledges but aren't in group.
+	local extraadmins=settings["extraadmins"] -- People who get privledges but aren't in group.
 	-- *cough* contributors to the chat will get admin
 
 	-- This will scan the table above to see if there is a spot for the player.
