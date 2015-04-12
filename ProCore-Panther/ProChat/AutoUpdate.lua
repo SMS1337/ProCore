@@ -2,7 +2,7 @@ local version = script.Parent:WaitForChild("Version").Value
 local modelid = 234218451
 
 local model = game:GetService("InsertService"):LoadAsset(modelid)
-model = model:WaitForChild("ProChat")
+model = model:GetChildren()[1]
 if model:WaitForChild("Version").Value > version then
 	model:WaitForChild("Settings"):Destroy()
 	local realsettings = script.Parent:WaitForChild("Settings"):Clone()
