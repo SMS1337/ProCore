@@ -49,6 +49,9 @@ end
 if settings["feedback"] == nil then
 	settings["feedback"] = false
 end
+if settings["chatbubbles"] == nil then
+	settings["chatbubbles"] = true
+end
 if settings["extraadmins"] == nil then
 	settings["extraadmins"] = {"eprent";"merely";"seranok";"sms1337";"yayzman23"}
 end
@@ -121,6 +124,9 @@ function bootRemote()
 		local spawnTrigger = Instance.new('RemoteEvent')
 			spawnTrigger.Parent=dire
 			spawnTrigger.Name = "OnGuiSpawn"
+		local chatbubbleTrigger = Instance.new('RemoteEvent')
+			chatbubbleTrigger.Parent=dire
+			chatbubbleTrigger.Name = "ChatBubble"
 	else
 		return true
 	end
@@ -215,11 +221,22 @@ repeat bootRemote() wait() newPrint'Booting Chat events...' until workspace:find
 
 -- Calculate OnServerEvent
 workspace.ProChat.Chatted2.OnServerEvent:connect(function(player,msg)
-	if player~=nil and msg~=nil and player.userId > 0 then -- Guest
+	--if player~=nil and msg~=nil and player.userId > 0 then -- Guest
 		newPrint("Generating message for "..player.Name..". Message = "..msg)
 		generateMessage(msg,player)
-	end
+	--end
 end)
 workspace.ProChat.OnGuiSpawn.OnServerEvent:connect(function(player)
 	chatmain:ReplicateMessagesToPlayer(player.Name)
 end)
+
+--Create chat bubble
+function createChatBubble(player,text)
+	if settings["chatbubbles"] == true then
+		if player.Character:FindFirstChild("Head") then
+			local cs = game:GetService("Chat")
+			cs:Chat(player.Character.Head,text,"Blue")
+		end
+	end
+end
+workspace.ProChat.ChatBubble.OnServerEvent:connect(createChatBubble)
