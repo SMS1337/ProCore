@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="ScreenGui" referent="RBX2DD6BB094C284718BA748FDCD079A1F5">
+	<Item class="ScreenGui" referent="RBXD41B5888118D410EB1726BD41B3DD391">
 		<Properties>
 			<string name="Name">chatGui</string>
 		</Properties>
-		<Item class="Frame" referent="RBXD96AEF2113C84986899CE564A247E226">
+		<Item class="Frame" referent="RBX8C7A22039DB94642A64F8F72C9AFB4C5">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -34,7 +34,7 @@
 				<int name="ZIndex">1</int>
 			</Properties>
 		</Item>
-		<Item class="Frame" referent="RBX527AF70EF4A04643A21B1D5355EE4F08">
+		<Item class="Frame" referent="RBXD182714780544640AC7F04487C9C4579">
 			<Properties>
 				<bool name="Active">false</bool>
 				<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -62,7 +62,7 @@
 				<bool name="Visible">true</bool>
 				<int name="ZIndex">1</int>
 			</Properties>
-			<Item class="TextLabel" referent="RBX3F710060A6704828A89A9641D1F655F1">
+			<Item class="TextLabel" referent="RBX6B430C82A3AF4207BA205C36E0E1CC18">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -101,7 +101,7 @@
 					<int name="ZIndex">2</int>
 				</Properties>
 			</Item>
-			<Item class="TextBox" referent="RBX23EC62572591418BB6C9C2A3BEE0921A">
+			<Item class="TextBox" referent="RBX841EF6AECA454DC5ABB80A74F9A56B7F">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -142,7 +142,7 @@
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="LocalScript" referent="RBX0A42CE9C4EE34447A9B98B76F8A5CA63">
+			<Item class="LocalScript" referent="RBX80F2CF8B4C4F4AE3AFD1CEF2684DEC02">
 				<Properties>
 					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
@@ -208,11 +208,18 @@ function detectMention(message)
 	end
 end
 
+function chatBubble(text)
+	if workspace:FindFirstChild("ProChat") then
+		workspace.ProChat.ChatBubble:FireServer(text)
+	end
+end
+
 -- To send the message
 function send()
 	if typer.Text ~= stockphrase and typer.Text ~= "" and typer.Text ~=" " then
 		--Good good, let's continue.
 		if workspace:findFirstChild'ProChat' then
+			chatBubble(string.sub(typer.Text,0,maxnumber))
 			workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
 			typer.Text = stockphrase
 
@@ -282,7 +289,7 @@ while wait() do
 end]]></ProtectedString>
 				</Properties>
 			</Item>
-			<Item class="TextButton" referent="RBX8E42AF75F58A4E989B97F4ABB4249CB9">
+			<Item class="TextButton" referent="RBXAA9711F811394938B47C744B3280F6D6">
 				<Properties>
 					<bool name="Active">true</bool>
 					<bool name="AutoButtonColor">true</bool>
