@@ -1,9 +1,7 @@
 # ProCore Client
 ProCore (short for Professional Core) is a complete replacement to the Core Graphical User Interface on ROBLOX's client + Studio.
 
-
-The design is inspired by Andy Liang, which you can see here:
-http://network.artcenter.edu/gallery/18220105/ROBLOX
+Meant to be more lightweight, easier to customize, and open to more developers.
 
 # Development
 This is a open-source project! Help us develop!
