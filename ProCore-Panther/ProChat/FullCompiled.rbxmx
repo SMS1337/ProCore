@@ -1,11 +1,11 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Folder" referent="RBX337F4BBFD52243FB91444E23D917FB82">
+	<Item class="Folder" referent="RBX8B640E2701844D2D89587E522462CA3D">
 		<Properties>
 			<string name="Name">ProChat v1 Panther</string>
 		</Properties>
-		<Item class="Script" referent="RBX7A11745C0896453E978A8000787E5B4D">
+		<Item class="Script" referent="RBX7BBCDC4A12E14DDBB7A641C4D8B4FAF5">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -60,6 +60,9 @@ if settings["nicknameLocked"] == nil then
 end
 if settings["feedback"] == nil then
 	settings["feedback"] = false
+end
+if settings["chatbubbles"] == nil then
+	settings["chatbubbles"] = true
 end
 if settings["extraadmins"] == nil then
 	settings["extraadmins"] = {"eprent";"merely";"seranok";"sms1337";"yayzman23"}
@@ -133,6 +136,9 @@ function bootRemote()
 		local spawnTrigger = Instance.new('RemoteEvent')
 			spawnTrigger.Parent=dire
 			spawnTrigger.Name = "OnGuiSpawn"
+		local chatbubbleTrigger = Instance.new('RemoteEvent')
+			chatbubbleTrigger.Parent=dire
+			chatbubbleTrigger.Name = "ChatBubble"
 	else
 		return true
 	end
@@ -235,9 +241,20 @@ end)
 workspace.ProChat.OnGuiSpawn.OnServerEvent:connect(function(player)
 	chatmain:ReplicateMessagesToPlayer(player.Name)
 end)
+
+--Create chat bubble
+function createChatBubble(player,text)
+	if settings["chatbubbles"] == true then
+		if player.Character:FindFirstChild("Head") then
+			local cs = game:GetService("Chat")
+			cs:Chat(player.Character.Head,text,"Blue")
+		end
+	end
+end
+workspace.ProChat.ChatBubble.OnServerEvent:connect(createChatBubble)
 ]]></ProtectedString>
 			</Properties>
-			<Item class="ModuleScript" referent="RBXBB28BCB7E2CC4F8486287CFEBF3E10B6">
+			<Item class="ModuleScript" referent="RBXF8899C38932B49E0A46D6A930385A71E">
 				<Properties>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">ClassGetter</string>
@@ -308,7 +325,7 @@ getclasses(children)
 return ClassGetter
 ]]></ProtectedString>
 				</Properties>
-				<Item class="ModuleScript" referent="RBXB5958F504EBB41FB8D764526EE87BED1">
+				<Item class="ModuleScript" referent="RBX0F28626290944E879E2B3C93C341242D">
 					<Properties>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">ChatMain</string>
@@ -358,7 +375,7 @@ return Class
 ]]></ProtectedString>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBX3356B1965F7846B18460C7B07958449C">
+				<Item class="ModuleScript" referent="RBX8944D44DB2784821B9FD7E6A49E8334E">
 					<Properties>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">Message</string>
@@ -452,7 +469,7 @@ return Class
 				</Item>
 			</Item>
 		</Item>
-		<Item class="Script" referent="RBXBD75F52B04554B398C674CB8C0EE7194">
+		<Item class="Script" referent="RBX9446A4E6DC4F4D5491D747239209CF37">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -497,11 +514,11 @@ game.Players.PlayerAdded:connect(function(p)
 	end
 end)]]></ProtectedString>
 			</Properties>
-			<Item class="ScreenGui" referent="RBXFBA47C2740D445DCA6F602C1BE3D389F">
+			<Item class="ScreenGui" referent="RBXD41B5888118D410EB1726BD41B3DD391">
 				<Properties>
 					<string name="Name">chatGui</string>
 				</Properties>
-				<Item class="Frame" referent="RBX80B389895CC6494EA1DF64BEE575A1F9">
+				<Item class="Frame" referent="RBX8C7A22039DB94642A64F8F72C9AFB4C5">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -530,7 +547,7 @@ end)]]></ProtectedString>
 						<int name="ZIndex">1</int>
 					</Properties>
 				</Item>
-				<Item class="Frame" referent="RBX60E720810E024F6EB50179BE7E652D77">
+				<Item class="Frame" referent="RBXD182714780544640AC7F04487C9C4579">
 					<Properties>
 						<bool name="Active">false</bool>
 						<Color3 name="BackgroundColor3">4294967295</Color3>
@@ -558,7 +575,7 @@ end)]]></ProtectedString>
 						<bool name="Visible">true</bool>
 						<int name="ZIndex">1</int>
 					</Properties>
-					<Item class="TextLabel" referent="RBXDF96D78E86994ACFAD54A202DE77D7FF">
+					<Item class="TextLabel" referent="RBX6B430C82A3AF4207BA205C36E0E1CC18">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -597,7 +614,7 @@ end)]]></ProtectedString>
 							<int name="ZIndex">2</int>
 						</Properties>
 					</Item>
-					<Item class="TextBox" referent="RBX47DD0FE19CF54543AB605DE489786CAC">
+					<Item class="TextBox" referent="RBX841EF6AECA454DC5ABB80A74F9A56B7F">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Color3 name="BackgroundColor3">4281616734</Color3>
@@ -638,7 +655,7 @@ end)]]></ProtectedString>
 							<int name="ZIndex">1</int>
 						</Properties>
 					</Item>
-					<Item class="LocalScript" referent="RBXE0D56F7AD96D4C699882D695D7954FB8">
+					<Item class="LocalScript" referent="RBX80F2CF8B4C4F4AE3AFD1CEF2684DEC02">
 						<Properties>
 							<bool name="Disabled">false</bool>
 							<Content name="LinkedSource"><null></null></Content>
@@ -704,11 +721,18 @@ function detectMention(message)
 	end
 end
 
+function chatBubble(text)
+	if workspace:FindFirstChild("ProChat") then
+		workspace.ProChat.ChatBubble:FireServer(text)
+	end
+end
+
 -- To send the message
 function send()
 	if typer.Text ~= stockphrase and typer.Text ~= "" and typer.Text ~=" " then
 		--Good good, let's continue.
 		if workspace:findFirstChild'ProChat' then
+			chatBubble(string.sub(typer.Text,0,maxnumber))
 			workspace.ProChat.Chatted2:FireServer(string.sub(typer.Text,0,maxnumber))
 			typer.Text = stockphrase
 
@@ -778,7 +802,7 @@ while wait() do
 end]]></ProtectedString>
 						</Properties>
 					</Item>
-					<Item class="TextButton" referent="RBX40E67DBE58FA4F4188AF9C7C642A8695">
+					<Item class="TextButton" referent="RBXAA9711F811394938B47C744B3280F6D6">
 						<Properties>
 							<bool name="Active">true</bool>
 							<bool name="AutoButtonColor">true</bool>
@@ -824,7 +848,7 @@ end]]></ProtectedString>
 				</Item>
 			</Item>
 		</Item>
-		<Item class="Script" referent="RBX7D8CC08710B44F9EA627012FF1D53F2C">
+		<Item class="Script" referent="RBXCF31B75A7F254220BE0007692E40C2E7">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -859,7 +883,7 @@ end]]></ProtectedString>
 --]]]]></ProtectedString>
 			</Properties>
 		</Item>
-		<Item class="Script" referent="RBX6A388795FBDA4A428EC1E3685A614FBB">
+		<Item class="Script" referent="RBX769C3C5C08BD4906A110A8E047F7A84E">
 			<Properties>
 				<bool name="Disabled">false</bool>
 				<Content name="LinkedSource"><null></null></Content>
@@ -869,41 +893,57 @@ local modelid = 234218451
 
 local model = game:GetService("InsertService"):LoadAsset(modelid)
 model = model:GetChildren()[1]
-if model:WaitForChild("Version").Value > version then
-	model:WaitForChild("Settings"):Destroy()
-	local realsettings = script.Parent:WaitForChild("Settings"):Clone()
-	realsettings.Parent = model
-	print("------------------------------------PROCHAT AUTO UPDATER------------------------------------")
-	game:GetService('TestService'):Warn(false, "ProChat just automagically updated to version " .. model:WaitForChild("Version").Value..", courtesy of the ProChat contributers")
-	game:GetService('TestService'):Warn(false, "Don't worry, all your settings should carry over, you should consider manually updating sometime though")	
-	game:GetService('TestService'):Warn(false, "If an update added new settings, they will be set to their default values")	
-	print("------------------------------------PROCHAT AUTO UPDATER------------------------------------")	
-	model.Parent = script.Parent.Parent
-	script.Parent:Destroy()
-else
-	print("did not update")
+
+local function printf(text)
+	game:GetService('TestService'):Warn(false, " [ ProChat Auto Update Function ] "..text)
+end
+
+local function continue()
 	canrun = Instance.new("BoolValue")
 	canrun.Name = "StartExec"
 	canrun.Parent = script.Parent
+end
+
+if model~= nil then -- If it's not trusted, it will nil. 
+	if model:WaitForChild("Version").Value > version then
+		model:WaitForChild("Settings"):Destroy()
+		local realsettings = script.Parent:WaitForChild("Settings"):Clone()
+			realsettings.Parent = model
+
+		printf("ProChat just automagically updated to version " .. model:WaitForChild("Version").Value.. ", courtesy of the ProChat contributers")
+		printf("Don't worry, all your settings should carry over, you should consider manually updating sometime though")
+		printf("If an update added new settings, they will be set to their default values")
+		
+		model.Parent = script.Parent.Parent
+		script.Parent:Destroy()
+	else
+		print("did not update")
+		continue()
+	end
+else -- If the model is nil
+	printf"Auto Update was disabled due to an fatal error."
+	continue()
+	script.Disabled=true
 end]]></ProtectedString>
 			</Properties>
 		</Item>
-		<Item class="ModuleScript" referent="RBX7B1CB6FC67F8420BB2FF220A91983740">
+		<Item class="ModuleScript" referent="RBX27A294FA214E41CD90F43A50764637D4">
 			<Properties>
 				<Content name="LinkedSource"><null></null></Content>
 				<string name="Name">Settings</string>
 				<ProtectedString name="Source"><![CDATA[local settings = {}
 	settings["nicknameLocked"] = true -- If set to true, nicknames are only for admins.
 	settings["feedback"] = false --Gives you output spam on everything that happens, good for debugging.
+	settings["chatbubbles"] = true -- Chat bubbles over your head
 	settings["extraadmins"] = {"eprent";"merely";"seranok";"sms1337";"yayzman23"} --people who get admin badge, defaults to contributers
 return settings
 ]]></ProtectedString>
 			</Properties>
 		</Item>
-		<Item class="IntValue" referent="RBX86F09CFBC1B4479B97FD7BECF2BEFBCD">
+		<Item class="IntValue" referent="RBX82E0821294044D88A7D1529D6DA7A5CA">
 			<Properties>
 				<string name="Name">Version</string>
-				<int name="Value">2</int>
+				<int name="Value">4</int>
 			</Properties>
 		</Item>
 	</Item>
